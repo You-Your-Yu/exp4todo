@@ -2,15 +2,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="/public/javascripts/jquery-2.1.4.js"></script>
+<script src="/public/javascripts/exp4todo.js"></script>
 <title>exp4todo Task Management</title>
 </head>
 <body>
 <h2>Task Management</h2>
-<p>ログイン</p>
-<form action="/todo/login/">
-<input name="uid" type="text" required/>
-<input name="pw" type="text" required/>
-<input type="submit"/>
+<h3>ログイン</h3>
+<form id="login-form" action="override by js." method="post">
+<p>ユーザーID: <input name="uid" type="text" required/></p>
+<p>パスワード: <input name="pw" type="text" required/></p>
+<p><input class="login" type="submit" value="ログイン"/>
+<input class="register" type="submit" value="新規登録"/></p>
 </form>
 </body>
 </html>

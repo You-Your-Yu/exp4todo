@@ -4,10 +4,12 @@
 /* login */
 $(function() {
 	$('.login').on('click', function() {
-		$('#loginForm').action = '/login';
+		//alert('login');
+		$('#login-form').action = '/login';
 	});
 	$('.register').on('click', function() {
-		$('#loginForm').action = '/register.html';
+		//alert('register');
+		$('#login-form').action = '/register';
 	});
 });
 
