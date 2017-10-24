@@ -1,4 +1,4 @@
-package models.entity;
+package models.todo;
 
 import javax.persistence.Entity;
 
