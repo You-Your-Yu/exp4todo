@@ -10,18 +10,18 @@ public class User extends Model {
 	/**
 	 * ユーザーID
 	 */
-	public String userId;
+	public String uid;
 	
 	/**
 	 * パスワード
 	 */
-	public String password;
+	public String pw;
 	
 	/**
 	 * コンストラクタ
 	 */
-	public User(String userId, String password) {
-		this.userId = userId;
-		this.password = password;
+	public User(String uid, String pw) {
+		this.uid = uid;
+		this.pw = pw;
 	}
 }
