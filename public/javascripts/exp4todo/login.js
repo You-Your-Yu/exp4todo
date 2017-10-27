@@ -1,6 +1,3 @@
-/* exp4todo.js */
-/* -*- coding: utf-8 -*- */
-
 /* login */
 $(function() {
 	$('.login').on('click', function() {
@@ -12,5 +9,3 @@ $(function() {
 		$('#login-form').action = '/register';
 	});
 });
-
-
