@@ -1,21 +1,23 @@
 package controllers.todo;
 
-import javax.swing.text.TabStop;
-
-import com.sun.xml.internal.bind.v2.runtime.Name;
-
-import javassist.tools.reflect.CannotCreateException;
+import models.todo.Consts;
 import models.todo.User;
 import play.mvc.Controller;
 import sample.DigestGenerator;
 
 public class Login extends Controller {
-	
+	/**
+	 * デフォルトで実行されるアクション
+	 */
 	public static void index() {
-		// todo.Login/index.htmlに記述されたビューを描画
+		if(session.contains(Consts.LOGIN)) {
+			redirect("/todo.Top");
+		}
 		render();
 	}
-	
+	/**
+	 * ログインフォームの処理
+	 */
 	public static void postLogin() {
 		String uid = params.get("uid");
 		String pw = params.get("pw");
@@ -30,16 +32,16 @@ public class Login extends Controller {
 			renderArgs.put("message", "パスワードが間違っています。");
 			index();
 		}
-		//TODO: sessionにユーザー情報を追加
-		
+		response.setCookie("uid", uid);
+		redirect("/todo.Top");
 	}
 	/**
-	 * ユーザー登録画面
+	 * ユーザー登録画面へ遷移
 	 */
 	public static void register() {
 		render();
 	}
-	
+
 	public static void postRegister() {
 		String uid = params.get("uid");
 		String pw = params.get("pw");
@@ -68,21 +70,21 @@ public class Login extends Controller {
 		user = new User(uid, pw, name);
 		user.save();
 		// ログイン処理
-		session.put(uid, user);
-		renderArgs.put("user", user);
-		registerResult();
+		session.put(Consts.LOGIN, true);
+		registerResult(user);
 	}
 	/**
 	 * ユーザー登録結果
 	 */
-	public static void registerResult() {
-		render();
+	public static void registerResult(User user) {
+		render(user);
 	}
 	/**
 	 * ログアウト
 	 */
 	public static void logout() {
-		// TODO: sessionからログイン情報を削除する
+		String uid = request.cookies.get("uid").value;
+		session.remove(uid);
 		index();
 	}
 }
