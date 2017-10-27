@@ -2,10 +2,10 @@
 $(function() {
 	$('.login').on('click', function() {
 		//alert('login');
-		$('#login-form').action = '/login';
+		$('#login-form').attr('action', '/login')
 	});
 	$('.register').on('click', function() {
 		//alert('register');
-		$('#login-form').action = '/register';
+		$('#login-form').attr('action', '/register');
 	});
 });
