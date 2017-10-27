@@ -1,11 +1,10 @@
 /* login */
+// TODO: トラバースによる参照に書き換え
 $(function() {
 	$('.login').on('click', function() {
-		//alert('login');
-		$('#login-form').attr('action', '/login')
+		$('#login-form').attr('action', 'todo.Login/login')
 	});
 	$('.register').on('click', function() {
-		//alert('register');
-		$('#login-form').attr('action', '/register');
+		$('#login-form').attr('action', '/todo.Login/register');
 	});
 });
