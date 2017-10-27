@@ -5,9 +5,14 @@
 <title>exp4todo Task Management</title>
 </head>
 <body>
-<h2>ようこそ</h2>
-<p>ユーザーID: ${user.uid}</p>
-<p>名前: ${user.name}</p>
-<a href="/todo.Top">はじめる</a>
+<h2>Task Management</h2>
+<h3>ユーザー登録</h3>
+<p>${message}</p>
+<form action="postRegister" method="post">
+<p>ユーザーID: <input name="uid" type="text" required/></p>
+<p>パスワード: <input name="pw" type="text"/></p>
+<p>ニックネーム: <input name="name" type="text" required/></p>
+<p><input type="submit" value="新規登録"/></p>
+</form>
 </body>
 </html>

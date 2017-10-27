@@ -1,10 +1,13 @@
 package controllers.todo;
 
+import javax.swing.text.TabStop;
+
 import com.sun.xml.internal.bind.v2.runtime.Name;
 
 import javassist.tools.reflect.CannotCreateException;
 import models.todo.User;
 import play.mvc.Controller;
+import sample.DigestGenerator;
 
 public class Login extends Controller {
 	
@@ -13,11 +16,31 @@ public class Login extends Controller {
 		render();
 	}
 	
-	public static void login() {
-		// 入力されたユーザーデータをDBと照合
+	public static void postLogin() {
+		String uid = params.get("uid");
+		String pw = params.get("pw");
+		User user = User.find("uid = ?1", uid).first();
+		if(user == null) {
+			renderArgs.put("message", "存在しないユーザーIDです。");
+			index();
+		}
+		// pwのダイジェスト作成
+		pw = DigestGenerator.getSHA256(pw + user.name + user.fixedSalt);
+		if(!pw.equals(user.pw)) {
+			renderArgs.put("message", "パスワードが間違っています。");
+			index();
+		}
+		//TODO: sessionにユーザー情報を追加
+		
+	}
+	/**
+	 * ユーザー登録画面
+	 */
+	public static void register() {
+		render();
 	}
 	
-	public static void register() {
+	public static void postRegister() {
 		String uid = params.get("uid");
 		String pw = params.get("pw");
 		String name = params.get("name");
@@ -25,12 +48,12 @@ public class Login extends Controller {
 		// ユーザーIDの重複を禁止
 		if(user != null) {
 			renderArgs.put("message", "既に存在するユーザーIDです。");
-			index();
+			register();
 		}
 		// ユーザーIDに空の文字列を禁止
 		if(uid == null || uid.isEmpty()) {
 			renderArgs.put("message", "空の文字列をユーザーIDとして登録することはできません。");
-			index();
+			register();
 		}
 		// パスワードには空文字を許可
 		if(pw == null || pw.isEmpty()) {
@@ -38,7 +61,8 @@ public class Login extends Controller {
 		}
 		// 名前に空のの文字列を禁止
 		if(name == null || name.isEmpty()) {
-			renderArgs.put("message", "空の文字列を名前として登録することはできません。");
+			renderArgs.put("message", "空の文字列をニックネームとして登録することはできません。");
+			register();
 		}
 		// ユーザー登録処理
 		user = new User(uid, pw, name);
@@ -46,6 +70,19 @@ public class Login extends Controller {
 		// ログイン処理
 		session.put(uid, user);
 		renderArgs.put("user", user);
+		registerResult();
+	}
+	/**
+	 * ユーザー登録結果
+	 */
+	public static void registerResult() {
 		render();
+	}
+	/**
+	 * ログアウト
+	 */
+	public static void logout() {
+		// TODO: sessionからログイン情報を削除する
+		index();
 	}
 }
