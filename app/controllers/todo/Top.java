@@ -14,9 +14,7 @@ public class Top extends Controller {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
-		System.out.println(" >> LOGIN=" + session.get(Consts.LOGIN));
 		User user = User.find("uid = ?1", session.get(Consts.LOGIN)).first();
-		System.out.println(" >> user="+user);
 		renderArgs.put("user", user);
 		render();
 	}
