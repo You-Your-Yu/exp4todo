@@ -27,9 +27,9 @@ public class Task extends Model {
 	 */
 	public User client;
 	/**
-	 * 担当者(people in charge)
+	 * 担当者(person in charge)リストのJSON文字列
 	 */
-	//public List<User> pic;
+	public User pic;
 	/**
 	 * タスクの種類
 	 */

@@ -11,8 +11,12 @@
 <p style="color: red">${flash.errmsg}</p>
 #{/if}
 <h3>タスク一覧</h3>
-<table>
-<tr>
+#{if listTask == null || listTask.isEmpty}
+<p>タスクはありません。</p>
+#{/if}
+#{else}
+<table border="1px">
+<tr style="background-color: gold">
 <td>タスク名</td>
 <td>詳細</td>
 <td>依頼者</td>
@@ -20,9 +24,30 @@
 <td>状態</td>
 <td>登録日時</td>
 <td>更新日時</td>
+<td></td>
+<td></td>
 </tr>
+%{ for(task in listTask) { }%
+<tr>
+<td>task.name</td>
+<td>task.description</td>
+<td>task.client</td>
+<td>task.listPic</td>
+<td>task.taskState</td>
+<td>task.registerTime</td>
+<td>task.updateTime</td>
+<td><form action="updateTask" method="post">
+<input type="submit" value="削除">
+<input type="hidden" name="">
+</form></td>
+<td></td>
+</tr>
+%{ } }%
 </table>
-<p>${message}</p>
-<a href="/todo.Login/logout">ログアウト</a>
+#{/else}
+<form action="registerTask" method="post">
+<p><input type="submit" value="タスクを登録"/></p>
+</form>
+<a href="/todo.login/logout">ログアウト</a>
 </body>
 </html>

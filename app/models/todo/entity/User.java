@@ -1,6 +1,7 @@
 package models.todo.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 import play.db.jpa.Model;
 import sample.DigestGenerator;
@@ -11,6 +12,7 @@ public class User extends Model {
 	/**
 	 * ユーザーID
 	 */
+	@Id
 	public String uid;
 	/**
 	 * パスワード

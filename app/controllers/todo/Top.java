@@ -3,6 +3,7 @@ package controllers.todo;
 import models.todo.consts.Consts;
 import models.todo.entity.User;
 import play.mvc.Controller;
+import services.todo.UserService;
 
 public class Top extends Controller {
 
@@ -14,8 +15,8 @@ public class Top extends Controller {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
-		User user = User.find("uid = ?1", session.get(Consts.LOGIN)).first();
-		renderArgs.put("user", user);
-		render();
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		render(user);
 	}
 }

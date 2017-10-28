@@ -4,6 +4,7 @@ import models.todo.consts.Consts;
 import models.todo.entity.User;
 import play.mvc.Controller;
 import sample.DigestGenerator;
+import services.todo.UserService;
 
 public class Login extends Controller {
 	/**
@@ -21,7 +22,7 @@ public class Login extends Controller {
 	public static void postLogin() {
 		String uid = params.get("uid");
 		String pw = params.get("pw");
-		User user = User.find("uid = ?1", uid).first();
+		User user = UserService.findUserByUid(uid);
 		if(user == null) {
 			flash.put(Consts.ERRMSG, "エラー: 存在しないユーザーIDです。ユーザーID: " + uid);
 			index();
@@ -38,24 +39,24 @@ public class Login extends Controller {
 	/**
 	 * ユーザー登録画面へ遷移
 	 */
-	public static void register() {
+	public static void registerUser() {
 		render();
 	}
 
-	public static void postRegister() {
+	public static void postRegisterUser() {
 		String uid = params.get("uid");
 		String pw = params.get("pw");
 		String name = params.get("name");
-		User user = User.find("uid = ?1", uid).first();
+		User user = UserService.findUserByUid(uid);
 		// ユーザーIDの重複を禁止
 		if(user != null) {
 			flash.put(Consts.ERRMSG, "エラー: 既に存在するユーザーIDです。ユーザーID: " + uid);
-			register();
+			registerUser();
 		}
 		// ユーザーIDに空の文字列を禁止
 		if(uid == null || uid.isEmpty()) {
 			flash.put(Consts.ERRMSG, "エラー: 空の文字列をユーザーIDとして登録することはできません。");
-			register();
+			registerUser();
 		}
 		// パスワードには空文字を許可
 		if(pw == null || pw.isEmpty()) {
@@ -64,21 +65,21 @@ public class Login extends Controller {
 		// 名前に空のの文字列を禁止
 		if(name == null || name.isEmpty()) {
 			flash.put(Consts.ERRMSG, "エラー: 空の文字列をニックネームとして登録することはできません。");
-			register();
+			registerUser();
 		}
 		// ユーザー登録処理
 		user = new User(uid, pw, name);
 		user.save();
 		// ログイン処理
 		session.put(Consts.LOGIN, uid);
-		registerResult();
+		registerUserResult();
 	}
 	/**
 	 * ユーザー登録結果
 	 */
-	public static void registerResult() {
+	public static void registerUserResult() {
 		String uid = session.get(Consts.LOGIN);
-		User user = User.find("uid = ?1", uid).first();
+		User user = UserService.findUserByUid(uid);
 		render(user);
 	}
 	/**
