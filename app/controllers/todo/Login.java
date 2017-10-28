@@ -1,7 +1,7 @@
 package controllers.todo;
 
-import models.todo.Consts;
-import models.todo.User;
+import models.todo.consts.Consts;
+import models.todo.entity.User;
 import play.mvc.Controller;
 import sample.DigestGenerator;
 
