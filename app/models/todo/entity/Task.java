@@ -1,7 +1,6 @@
 package models.todo.entity;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import javax.persistence.Entity;
 
@@ -30,7 +29,7 @@ public class Task extends Model {
 	/**
 	 * 担当者(people in charge)
 	 */
-	public List<User> pic;
+	//public List<User> pic;
 	/**
 	 * タスクの種類
 	 */

@@ -11,7 +11,7 @@ public class Login extends Controller {
 	 */
 	public static void index() {
 		if(session.contains(Consts.LOGIN)) {
-			redirect("/todo.Top");
+			Top.index();
 		}
 		render();
 	}
@@ -23,17 +23,17 @@ public class Login extends Controller {
 		String pw = params.get("pw");
 		User user = User.find("uid = ?1", uid).first();
 		if(user == null) {
-			renderArgs.put("message", "存在しないユーザーIDです。");
+			flash.put(Consts.ERRMSG, "エラー: 存在しないユーザーIDです。ユーザーID: " + uid);
 			index();
 		}
 		// pwのダイジェスト作成
 		pw = DigestGenerator.getSHA256(pw + user.name + user.fixedSalt);
 		if(!pw.equals(user.pw)) {
-			renderArgs.put("message", "パスワードが間違っています。");
+			flash.put(Consts.ERRMSG, "パスワードが間違っています。");
 			index();
 		}
-		response.setCookie("uid", uid);
-		redirect("/todo.Top");
+		session.put(Consts.LOGIN, uid);
+		Top.index();
 	}
 	/**
 	 * ユーザー登録画面へ遷移
@@ -49,12 +49,12 @@ public class Login extends Controller {
 		User user = User.find("uid = ?1", uid).first();
 		// ユーザーIDの重複を禁止
 		if(user != null) {
-			renderArgs.put("message", "既に存在するユーザーIDです。");
+			flash.put(Consts.ERRMSG, "エラー: 既に存在するユーザーIDです。ユーザーID: " + uid);
 			register();
 		}
 		// ユーザーIDに空の文字列を禁止
 		if(uid == null || uid.isEmpty()) {
-			renderArgs.put("message", "空の文字列をユーザーIDとして登録することはできません。");
+			flash.put(Consts.ERRMSG, "エラー: 空の文字列をユーザーIDとして登録することはできません。");
 			register();
 		}
 		// パスワードには空文字を許可
@@ -63,28 +63,30 @@ public class Login extends Controller {
 		}
 		// 名前に空のの文字列を禁止
 		if(name == null || name.isEmpty()) {
-			renderArgs.put("message", "空の文字列をニックネームとして登録することはできません。");
+			flash.put(Consts.ERRMSG, "エラー: 空の文字列をニックネームとして登録することはできません。");
 			register();
 		}
 		// ユーザー登録処理
 		user = new User(uid, pw, name);
 		user.save();
 		// ログイン処理
-		session.put(Consts.LOGIN, true);
-		registerResult(user);
+		session.put(Consts.LOGIN, uid);
+		registerResult();
 	}
 	/**
 	 * ユーザー登録結果
 	 */
-	public static void registerResult(User user) {
+	public static void registerResult() {
+		String uid = session.get(Consts.LOGIN);
+		User user = User.find("uid = ?1", uid).first();
 		render(user);
 	}
 	/**
 	 * ログアウト
 	 */
 	public static void logout() {
-		String uid = request.cookies.get("uid").value;
-		session.remove(uid);
+		System.out.println(" >> logout");
+		session.remove(Consts.LOGIN);
 		index();
 	}
 }

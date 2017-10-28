@@ -7,11 +7,13 @@
 <body>
 <h2>Task Management</h2>
 <h3>ログイン</h3>
-<p>${message}</p>
+#{if flash.errmsg != null}
+<p style="color: red">${flash.errmsg}</p>
+#{/if}
 <form action="postLogin" method="post">
 <p>ユーザーID: <input name="uid" type="text" required/></p>
 <p>パスワード: <input name="pw" type="text" required/></p>
-<p><input class="login" type="submit" value="ログイン"/></p>
+<p><input type="submit" value="ログイン"/></p>
 </form>
 <a href="register">はじめての方はコチラ</a>
 </body>

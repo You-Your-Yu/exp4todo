@@ -7,13 +7,15 @@
 <body>
 <h2>Task Management</h2>
 <h3>ユーザー登録</h3>
-<p>${message}</p>
-<form action="postRegister" method="post">
+#{if flash.errmsg != null}
+<p style="color: red">${flash.errmsg}</p>
+#{/if}
+<form action="./postRegister" method="post">
 <p>ユーザーID: <input name="uid" type="text" required/></p>
 <p>パスワード: <input name="pw" type="text"/></p>
 <p>ニックネーム: <input name="name" type="text" required/></p>
 <p><input type="submit" value="新規登録"/></p>
-<p><a href="/todo.Login/">戻る</a></p>
+<p><a href="./">戻る</a></p>
 </form>
 </body>
 </html>
