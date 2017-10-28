@@ -37,10 +37,13 @@
 <td>task.registerTime</td>
 <td>task.updateTime</td>
 <td><form action="updateTask" method="post">
-<input type="submit" value="削除">
-<input type="hidden" name="">
+<input type="submit" value="編集">
+<input type="hidden" name="id" value="${task.getId()}">
 </form></td>
-<td></td>
+<td><form action="deleteTask" method="post">
+<input type="submit" value="削除">
+<input type="hidden" name="id" value="${task.getId()}">
+</form></td>
 </tr>
 %{ } }%
 </table>

@@ -19,4 +19,18 @@ public class Top extends Controller {
 		User user = UserService.findUserByUid(uid);
 		render(user);
 	}
+
+	/**
+	 * タスク登録画面へ遷移
+	 */
+	public static void registerTask() {
+		render();
+	}
+
+	/**
+	 * タスクの登録を行う
+	 */
+	public static void postRegisterTask() {
+
+	}
 }

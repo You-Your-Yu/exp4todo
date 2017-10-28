@@ -68,8 +68,7 @@ public class Login extends Controller {
 			registerUser();
 		}
 		// ユーザー登録処理
-		user = new User(uid, pw, name);
-		user.save();
+		UserService.regisgerUser(uid, pw, name);
 		// ログイン処理
 		session.put(Consts.LOGIN, uid);
 		registerUserResult();
