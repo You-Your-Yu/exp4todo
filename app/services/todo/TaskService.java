@@ -4,7 +4,6 @@ import java.util.List;
 
 import models.todo.consts.TaskType;
 import models.todo.entity.Task;
-import models.todo.entity.User;
 
 public class TaskService {
 	/**
@@ -22,11 +21,11 @@ public class TaskService {
 	 * @return
 	 */
 	public static List<Task> findListTaskByUid(String uid) {
-		return User.find("uid = ?1", uid).fetch();
+		return Task.find("clientUid = ?1", uid).fetch();
 	}
 
-	public static Task registerTask(String name, User client, TaskType taskType) {
-		Task task = new Task(name, client, taskType);
+	public static Task registerTask(String name, String description, String tid, String clientUid, String picUid, TaskType taskType) {
+		Task task = new Task(name, description, tid, clientUid, picUid, taskType);
 		task.save();
 		return task;
 	}

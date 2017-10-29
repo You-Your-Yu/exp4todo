@@ -1,22 +1,26 @@
 package models.todo.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 import play.db.jpa.Model;
 
 @Entity
 public class Team extends Model {
+
+	/**
+	 * チームID
+	 */
+	@Id
+	public String tid;
+
 	/**
 	 * チーム名
 	 */
 	public String name;
 
-	/**
-	 * チーム参加のためのパスワード
-	 */
-	public String pw;
-
-	public Team(String name) {
+	public Team(String tid, String pw, String name) {
+		this.tid = tid;
 		this.name = name;
 	}
 }

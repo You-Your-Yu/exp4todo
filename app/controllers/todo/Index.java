@@ -2,15 +2,16 @@ package controllers.todo;
 
 import models.todo.consts.Consts;
 import play.mvc.Controller;
+import services.todo.UserService;
 
 public class Index extends Controller {
 
 	public static void index() {
-		if(session.contains(Consts.LOGIN)) {
-			Top.index();
+		if(UserService.findUserByUid(session.get(Consts.LOGIN)) == null) {
+			Login.index();
 		}
 		else {
-			Login.index();
+			Top.index();
 		}
 	}
 }

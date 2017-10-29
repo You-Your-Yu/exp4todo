@@ -11,7 +11,7 @@ public class Login extends Controller {
 	 * デフォルトで実行されるアクション
 	 */
 	public static void index() {
-		if(session.contains(Consts.LOGIN)) {
+		if(UserService.findUserByUid(session.get(Consts.LOGIN)) != null) {
 			Top.index();
 		}
 		render();
@@ -24,7 +24,7 @@ public class Login extends Controller {
 		String pw = params.get("pw");
 		User user = UserService.findUserByUid(uid);
 		if(user == null) {
-			flash.put(Consts.ERRMSG, "エラー: 存在しないユーザーIDです。ユーザーID: " + uid);
+			flash.put(Consts.ERRMSG, "存在しないユーザーIDです。ユーザーID: " + uid);
 			index();
 		}
 		// pwのダイジェスト作成
@@ -50,12 +50,12 @@ public class Login extends Controller {
 		User user = UserService.findUserByUid(uid);
 		// ユーザーIDの重複を禁止
 		if(user != null) {
-			flash.put(Consts.ERRMSG, "エラー: 既に存在するユーザーIDです。ユーザーID: " + uid);
+			flash.put(Consts.ERRMSG, "既に存在するユーザーIDです。ユーザーID: " + uid);
 			registerUser();
 		}
 		// ユーザーIDに空の文字列を禁止
 		if(uid == null || uid.isEmpty()) {
-			flash.put(Consts.ERRMSG, "エラー: 空の文字列をユーザーIDとして登録することはできません。");
+			flash.put(Consts.ERRMSG, "空の文字列をユーザーIDとして登録することはできません。");
 			registerUser();
 		}
 		// パスワードには空文字を許可
@@ -64,7 +64,7 @@ public class Login extends Controller {
 		}
 		// 名前に空のの文字列を禁止
 		if(name == null || name.isEmpty()) {
-			flash.put(Consts.ERRMSG, "エラー: 空の文字列をニックネームとして登録することはできません。");
+			flash.put(Consts.ERRMSG, "空の文字列をニックネームとして登録することはできません。");
 			registerUser();
 		}
 		// ユーザー登録処理

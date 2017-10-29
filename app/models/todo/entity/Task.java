@@ -21,15 +21,15 @@ public class Task extends Model {
 	/**
 	 * 属するチーム
 	 */
-	public Team team;
+	public String tid;
 	/**
-	 * 依頼者
+	 * 依頼者のuid
 	 */
-	public User client;
+	public String clientUid;
 	/**
-	 * 担当者(person in charge)リストのJSON文字列
+	 * 担当者(person in charge)のuid
 	 */
-	public User pic;
+	public String picUid;
 	/**
 	 * タスクの種類
 	 */
@@ -47,9 +47,18 @@ public class Task extends Model {
 	 */
 	public Timestamp updateTime;
 
-	public Task(String name, User client, TaskType taskType) {
+	/**
+	 * 最低限必要な項目
+	 * @param name
+	 * @param client
+	 * @param taskType
+	 */
+	public Task(String name, String description, String tid, String clientUid, String picUid, TaskType taskType) {
 		this.name = name;
-		this.client = client;
+		this.description = description;
+		this.tid = tid;
+		this.clientUid = clientUid;
+		this.picUid = picUid;
 		this.taskType = taskType;
 		this.taskState = TaskState.INCOMPLETED;
 		this.registerTime = new Timestamp(System.currentTimeMillis());

@@ -8,7 +8,7 @@ public class Consts {
 	 * value=uid
 	 * として保存する。
 	 */
-	public static final String LOGIN = "login";
+	public static final String LOGIN = "LOGIN";
 
 	/**
 	 * エラー発生時に使用。
@@ -17,5 +17,5 @@ public class Consts {
 	 * value=(エラーメッセージ)
 	 * として保存する。
 	 */
-	public static final String ERRMSG = "errmsg";
+	public static final String ERRMSG = "ERRMSG";
 }

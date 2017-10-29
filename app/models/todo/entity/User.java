@@ -27,9 +27,9 @@ public class User extends Model {
 	 */
 	public final String fixedSalt;
 	/**
-	 * 所属チーム
+	 * 所属チームのID
 	 */
-	public Team team;
+	public String tid;
 
 	public User(String uid, String pw, String name) {
 		this.fixedSalt = RandomGenerator.generateRandomId();

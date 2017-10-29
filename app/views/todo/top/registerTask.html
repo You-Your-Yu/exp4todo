@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>exp4todo Task Management</title>
+</head>
+<body>
+<h2>Task Management</h2>
+<h3>タスク登録</h3>
+#{if flash.ERRMSG != null}
+<p style="color: red">${flash.ERRMSG}</p>
+#{/if}
+<form action="postRegisterTask" method="post">
+<dl>
+	<dt>タスク名</dt>
+	<dd><input type="text" name="name"/></dd>
+	<dt>タスクの説明</dt>
+	<dd><textarea name="description"></textarea></dd>
+	<dt>タスクの種類</dt>
+	<dd><input type="radio" name="taskType" value="PRIVATE" checked/>個人
+	<input type="radio" name="taskType" value="PUBLIC"/>チーム</dd>
+</dl>
+<p><input type="submit" value="登録"/></p>
+</form>
+<a href="./">戻る</a>
+</body>
+</html>

@@ -7,15 +7,15 @@
 <body>
 <h2>Topページ</h2>
 <p>こんにちは${user.name}さん</p>
-#{if flash.errmsg != null}
-<p style="color: red">${flash.errmsg}</p>
+#{if flash.ERRMSG != null}
+<p style="color: red">${flash.ERRMSG}</p>
 #{/if}
 <h3>タスク一覧</h3>
-#{if listTask == null || listTask.isEmpty}
+#{if listTask == null || listTask.isEmpty()}
 <p>タスクはありません。</p>
 #{/if}
 #{else}
-<table border="1px">
+<table border="1">
 <tr style="background-color: gold">
 <td>タスク名</td>
 <td>詳細</td>
@@ -29,13 +29,13 @@
 </tr>
 %{ for(task in listTask) { }%
 <tr>
-<td>task.name</td>
-<td>task.description</td>
-<td>task.client</td>
-<td>task.listPic</td>
-<td>task.taskState</td>
-<td>task.registerTime</td>
-<td>task.updateTime</td>
+<td>${task.name}</td>
+<td>${task.description}</td>
+<td>${task.clientUid}</td>
+<td>${task.picUid}</td>
+<td>${task.taskState}</td>
+<td>${task.registerTime}</td>
+<td>${task.updateTime}</td>
 <td><form action="updateTask" method="post">
 <input type="submit" value="編集">
 <input type="hidden" name="id" value="${task.getId()}">

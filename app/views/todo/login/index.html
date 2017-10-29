@@ -7,8 +7,8 @@
 <body>
 <h2>Task Management</h2>
 <h3>ログイン</h3>
-#{if flash.errmsg != null}
-<p style="color: red">${flash.errmsg}</p>
+#{if flash.ERRMSG != null}
+<p style="color: red">${flash.ERRMSG}</p>
 #{/if}
 <form action="postLogin" method="post">
 <p>ユーザーID: <input name="uid" type="text" required/></p>
