@@ -1,5 +1,6 @@
 package services.todo;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import models.todo.consts.TaskType;
@@ -24,8 +25,8 @@ public class TaskService {
 		return Task.find("clientUid = ?1", uid).fetch();
 	}
 
-	public static Task registerTask(String name, String description, String tid, String clientUid, String picUid, TaskType taskType) {
-		Task task = new Task(name, description, tid, clientUid, picUid, taskType);
+	public static Task registerTask(String name, String description, String tid, String clientUid, String picUid, TaskType taskType, Timestamp limitTime) {
+		Task task = new Task(name, description, tid, clientUid, picUid, taskType, limitTime);
 		task.save();
 		return task;
 	}

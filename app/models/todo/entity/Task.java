@@ -39,6 +39,10 @@ public class Task extends Model {
 	 */
 	public TaskState taskState;
 	/**
+	 * 締め切り日時
+	 */
+	public Timestamp limitTime;
+	/**
 	 * 登録日時
 	 */
 	public Timestamp registerTime;
@@ -53,7 +57,7 @@ public class Task extends Model {
 	 * @param client
 	 * @param taskType
 	 */
-	public Task(String name, String description, String tid, String clientUid, String picUid, TaskType taskType) {
+	public Task(String name, String description, String tid, String clientUid, String picUid, TaskType taskType, Timestamp limitTime) {
 		this.name = name;
 		this.description = description;
 		this.tid = tid;
@@ -61,6 +65,7 @@ public class Task extends Model {
 		this.picUid = picUid;
 		this.taskType = taskType;
 		this.taskState = TaskState.INCOMPLETED;
+		this.limitTime = limitTime;
 		this.registerTime = new Timestamp(System.currentTimeMillis());
 		this.updateTime = new Timestamp(System.currentTimeMillis());
 	}

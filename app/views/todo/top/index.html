@@ -22,28 +22,16 @@
 <td>依頼者</td>
 <td>担当者</td>
 <td>状態</td>
-<td>登録日時</td>
-<td>更新日時</td>
-<td></td>
-<td></td>
+<td>締め切り日時(24h制)</td>
 </tr>
 %{ for(task in listTask) { }%
 <tr>
-<td>${task.name}</td>
+<td><a href="./getTaskDetail">${task.name}</a></td>
 <td>${task.description}</td>
 <td>${task.clientUid}</td>
 <td>${task.picUid}</td>
-<td>${task.taskState}</td>
-<td>${task.registerTime}</td>
-<td>${task.updateTime}</td>
-<td><form action="updateTask" method="post">
-<input type="submit" value="編集">
-<input type="hidden" name="id" value="${task.getId()}">
-</form></td>
-<td><form action="deleteTask" method="post">
-<input type="submit" value="削除">
-<input type="hidden" name="id" value="${task.getId()}">
-</form></td>
+<td>${task.taskState.getString()}</td>
+<td>${new Date(task.limitTime.getTime()).format('yyyy年MM月dd日(E) HH時mm分', 'ja')}</td>
 </tr>
 %{ } }%
 </table>

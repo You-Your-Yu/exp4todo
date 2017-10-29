@@ -12,13 +12,15 @@
 #{/if}
 <form action="postRegisterTask" method="post">
 <dl>
-	<dt>タスク名</dt>
-	<dd><input type="text" name="name"/></dd>
+	<dt>タスク名(必須)</dt>
+	<dd><input type="text" name="name" required/></dd>
 	<dt>タスクの説明</dt>
 	<dd><textarea name="description"></textarea></dd>
-	<dt>タスクの種類</dt>
+	<dt>タスクの種類(必須)</dt>
 	<dd><input type="radio" name="taskType" value="PRIVATE" checked/>個人
 	<input type="radio" name="taskType" value="PUBLIC"/>チーム</dd>
+	<dt>締め切り日時(必須)</dt>
+	<dd><input type="datetime-local" name="limitTime"></dd>
 </dl>
 <p><input type="submit" value="登録"/></p>
 </form>

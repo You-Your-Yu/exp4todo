@@ -1,5 +1,7 @@
 package controllers.todo;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import models.todo.consts.Consts;
@@ -37,15 +39,21 @@ public class Top extends Controller {
 	 * タスクの登録を行う
 	 */
 	public static void postRegisterTask() {
-		String uid = session.get(Consts.LOGIN);
-		User client = UserService.findUserByUid(uid);
-		String clientUid = client.uid;
-		String picUid = null;
-		String tid = client.tid;
-		String name = params.get("name");
-		String description = params.get("description");
-		TaskType taskType = TaskType.valueOf(params.get("taskType"));
-		TaskService.registerTask(name, description, tid, clientUid, picUid, taskType);
+		try {
+			String uid = session.get(Consts.LOGIN);
+			User client = UserService.findUserByUid(uid);
+			String clientUid = client.uid;
+			String picUid = null;
+			String tid = client.tid;
+			String name = params.get("name");
+			String description = params.get("description");
+			TaskType taskType = TaskType.valueOf(params.get("taskType"));
+			Timestamp limitTime = new Timestamp(new SimpleDateFormat("yyyy-MM-dd hh:mm")
+					.parse(params.get("limitTime").replaceAll("T", " ")).getTime());
+			TaskService.registerTask(name, description, tid, clientUid, picUid, taskType, limitTime);
+		} catch (Exception e) {
+			flash.put(Consts.ERRMSG, e.getMessage());
+		}
 
 		index();
 	}
