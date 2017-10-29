@@ -2,28 +2,55 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>exp4todo Task Management</title>
+<title>todo</title>
+<link rel="stylesheet" href="/public/stylesheets/todo/normalize.css">
+<link rel="stylesheet" href="/public/stylesheets/todo/common.css">
 </head>
 <body>
-<h2>Task Management</h2>
-<h3>タスク登録</h3>
-#{if flash.ERRMSG != null}
-<p style="color: red">${flash.ERRMSG}</p>
-#{/if}
-<form action="postRegisterTask" method="post">
-<dl>
-	<dt>タスク名(必須)</dt>
-	<dd><input type="text" name="name" required/></dd>
-	<dt>タスクの説明</dt>
-	<dd><textarea name="description"></textarea></dd>
-	<dt>タスクの種類(必須)</dt>
-	<dd><input type="radio" name="taskType" value="PRIVATE" checked/>個人
-	<input type="radio" name="taskType" value="PUBLIC"/>チーム</dd>
-	<dt>締め切り日時(必須)</dt>
-	<dd><input type="datetime-local" name="limitTime"></dd>
-</dl>
-<p><input type="submit" value="登録"/></p>
-</form>
+<div id="page">
+<header id="pageHead">
+	<h1 id="siteTitle">todo</h1>
+	<p id="geeting">新しいタスクを登録しましょう</p>
+	<nav class="globalNavi">
+		<ul>
+			<li><a href="./index">ホーム</a></li>
+			<li><a href="./myPage">マイページ</a></li>
+		</ul>
+	</nav>
+</header>
+
+<div class="errmsg">
+	#{if flash.ERRMSG != null}
+	<p style="color: red">${flash.ERRMSG}</p>
+	#{/if}
+</div>
+
+<div id="pageBody">
+<div class="registerTaskForm">
+	<h2 class="pageTitle">タスク登録</h2>
+	#{if flash.ERRMSG != null}
+	<p style="color: red">${flash.ERRMSG}</p>
+	#{/if}
+	<form action="postRegisterTask" method="post">
+		<dl>
+			<dt>タスク名(必須)</dt>
+			<dd><input type="text" name="name" required/></dd>
+			<dt>タスクの説明</dt>
+			<dd><textarea name="description"></textarea></dd>
+			<dt>タスクの種類(必須)</dt>
+			<dd><input type="radio" name="taskType" value="PRIVATE" checked/>個人
+				<input type="radio" name="taskType" value="PUBLIC"/>チーム</dd>
+			<dt>締め切り日時(必須)</dt>
+			<dd><input type="datetime-local" name="limitTime"></dd>
+		</dl>
+		<p><input type="submit" value="登録"/></p>
+	</form>
+</div>
+
 <a href="./">戻る</a>
+
+</div>
+</div>
+
 </body>
 </html>

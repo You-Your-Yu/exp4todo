@@ -71,16 +71,9 @@ public class Login extends Controller {
 		UserService.regisgerUser(uid, pw, name);
 		// ログイン処理
 		session.put(Consts.LOGIN, uid);
-		registerUserResult();
+		index();
 	}
-	/**
-	 * ユーザー登録結果
-	 */
-	public static void registerUserResult() {
-		String uid = session.get(Consts.LOGIN);
-		User user = UserService.findUserByUid(uid);
-		render(user);
-	}
+
 	/**
 	 * ログアウト
 	 */

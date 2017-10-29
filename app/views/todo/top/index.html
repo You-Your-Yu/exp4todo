@@ -2,43 +2,65 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>exp4todo Task Management</title>
+<title>todo</title>
+<link rel="stylesheet" href="/public/stylesheets/todo/normalize.css">
+<link rel="stylesheet" href="/public/stylesheets/todo/common.css">
 </head>
 <body>
-<h2>Topページ</h2>
-<p>こんにちは${user.name}さん</p>
-#{if flash.ERRMSG != null}
-<p style="color: red">${flash.ERRMSG}</p>
-#{/if}
-<h3>タスク一覧</h3>
-#{if listTask == null || listTask.isEmpty()}
-<p>タスクはありません。</p>
-#{/if}
-#{else}
-<table border="1">
-<tr style="background-color: gold">
-<td>タスク名</td>
-<td>詳細</td>
-<td>依頼者</td>
-<td>担当者</td>
-<td>状態</td>
-<td>締め切り日時(24h制)</td>
-</tr>
-%{ for(task in listTask) { }%
-<tr>
-<td><a href="./getTaskDetail">${task.name}</a></td>
-<td>${task.description}</td>
-<td>${task.clientUid}</td>
-<td>${task.picUid}</td>
-<td>${task.taskState.getString()}</td>
-<td>${new Date(task.limitTime.getTime()).format('yyyy年MM月dd日(E) HH時mm分', 'ja')}</td>
-</tr>
-%{ } }%
-</table>
-#{/else}
-<form action="registerTask" method="post">
-<p><input type="submit" value="タスクを登録"/></p>
-</form>
+
+<div id="page">
+<header id="pageHead">
+	<h1 id="siteTitle">todo</h1>
+	<p id="geeting">こんにちは、${user.name}さん</p>
+	<nav class="globalNavi">
+		<ul>
+			<li class="current"><a href="./index">ホーム</a></li>
+			<li><a href="./myPage">マイページ</a></li>
+		</ul>
+	</nav>
+</header>
+
+<div class="errmsg">
+	#{if flash.ERRMSG != null}
+	<p style="color: red">${flash.ERRMSG}</p>
+	#{/if}
+</div>
+
+<div id="pageBody">
+<div class="tasks">
+	<h2 class="pageTitle">タスク一覧</h2>
+	#{if listTask == null || listTask.isEmpty()}
+	<p>タスクはありません。</p>
+	#{/if}
+	#{else}
+	<table>
+	<tr>
+		<th>タスク名</th>
+		<th>担当者</th>
+		<th>依頼者</th>
+		<th>状態</th>
+		<th>締め切り日時(24h制)</th>
+	</tr>
+	%{ for(task in listTask) { }%
+	<tr>
+		<td class="taskLink"><a href="./getTaskDetail">${task.name}</a></td>
+		<td>${task.picUid}</td>
+		<td>${task.clientUid}</td>
+		<td>${task.taskState.getString()}</td>
+		<td>${new Date(task.limitTime.getTime()).format('yyyy年MM月dd日(E) HH時mm分', 'ja')}</td>
+	</tr>
+	%{ } }%
+	</table>
+	#{/else}
+	<form action="registerTask" method="post">
+		<p><input type="submit" value="タスクを登録"/></p>
+	</form>
+</div>
+
 <a href="/todo.login/logout">ログアウト</a>
+
+</div>
+</div>
+
 </body>
 </html>
