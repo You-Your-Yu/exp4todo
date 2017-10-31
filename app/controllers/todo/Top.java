@@ -2,7 +2,6 @@ package controllers.todo;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import models.todo.consts.Consts;
@@ -29,7 +28,7 @@ public class Top extends Controller {
 		// タスクの一覧表示
 		List<Task> listTask = TaskService.findListTaskByUid(uid);
 		List<TaskDto> listTaskDto = TaskService.initListTaskDto(listTask);
-		
+
 		render(user, listTaskDto);
 	}
 
