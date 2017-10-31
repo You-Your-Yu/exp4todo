@@ -29,7 +29,7 @@
 <div id="pageBody">
 <div class="tasks">
 	<h2 class="pageTitle">タスク一覧</h2>
-	#{if listTask == null || listTask.isEmpty()}
+	#{if listTaskDto == null || listTaskDto.isEmpty()}
 	<p>タスクはありません。</p>
 	#{/if}
 	#{else}
@@ -41,13 +41,13 @@
 		<th>状態</th>
 		<th>締め切り日時(24h制)</th>
 	</tr>
-	%{ for(task in listTask) { }%
+	%{ for(taskDto in listTaskDto) { }%
 	<tr>
-		<td class="taskLink"><a href="./getTaskDetail">${task.name}</a></td>
-		<td>${task.picUid}</td>
-		<td>${task.clientUid}</td>
-		<td>${task.taskState.getString()}</td>
-		<td>${new Date(task.limitTime.getTime()).format('yyyy年MM月dd日(E) HH時mm分', 'ja')}</td>
+		<td class="taskLink"><a href="./getTaskDetail">${taskDto.taskName}</a></td>
+		<td>${taskDto.picName}</td>
+		<td>${taskDto.clientName}</td>
+		<td>${taskDto.taskState}</td>
+		<td>${taskDto.limitTime}</td>
 	</tr>
 	%{ } }%
 	</table>

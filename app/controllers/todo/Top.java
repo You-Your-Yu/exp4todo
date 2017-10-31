@@ -2,10 +2,12 @@ package controllers.todo;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import models.todo.consts.Consts;
 import models.todo.consts.TaskType;
+import models.todo.dto.TaskDto;
 import models.todo.entity.Task;
 import models.todo.entity.User;
 import play.mvc.Controller;
@@ -24,8 +26,11 @@ public class Top extends Controller {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
+		// タスクの一覧表示
 		List<Task> listTask = TaskService.findListTaskByUid(uid);
-		render(user, listTask);
+		List<TaskDto> listTaskDto = TaskService.initListTaskDto(listTask);
+		
+		render(user, listTaskDto);
 	}
 
 	/**
