@@ -1,7 +1,5 @@
 package models.todo.dto;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
-
 /**
  * Taskの画面表示用オブジェクト
  * @author yamada.y.bk
