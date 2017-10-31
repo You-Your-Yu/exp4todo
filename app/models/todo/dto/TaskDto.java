@@ -1,15 +1,51 @@
 package models.todo.dto;
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
+
 /**
  * Taskの画面表示用オブジェクト
  * @author yamada.y.bk
  *
  */
 public class TaskDto {
+	/**
+	 * タスク名
+	 */
 	public String taskName;
+	/**
+	 * タスクのid
+	 */
+	public Long id;
+	/**
+	 * 依頼者Userのname
+	 */
 	public String clientName;
+	/**
+	 * 依頼者Userのuid
+	 */
+	public String clientUid;
+	/**
+	 * 担当者Userのname
+	 */
 	public String picName;
+	/**
+	 * 担当者Userのuid
+	 */
+	public String picUid;
+	/**
+	 * タスクの説明
+	 */
+	public String description;
+	/**
+	 * 締め切り日時
+	 */
 	public String limitTime;
+	/**
+	 * タスクの状態(完了or未完了)
+	 */
 	public String taskState;
+	/**
+	 * タスクの属するチーム
+	 */
 	public String teamName;
 }

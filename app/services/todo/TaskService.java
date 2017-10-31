@@ -46,14 +46,26 @@ public class TaskService {
 	public static TaskDto initTaskDto(Task task) {
 		TaskDto taskDto = new TaskDto();
 		taskDto.taskName = task.name;
-		taskDto.clientName = UserService.findUserByUid(task.clientUid).name;
+		taskDto.id = task.id;
+		User client = UserService.findUserByUid(task.clientUid);
+		if(client != null) {
+			taskDto.clientName = client.name;
+			taskDto.clientUid = client.name;
+		}
+		else {
+			taskDto.clientName = Consts.NONE;
+			taskDto.clientUid = Consts.NONE;
+		}
 		User pic = UserService.findUserByUid(task.picUid);
 		if(pic != null) {
-			taskDto.picName = UserService.findUserByUid(task.picUid).name;
+			taskDto.picName = pic.name;
+			taskDto.clientName = pic.uid;
 		}
 		else {
 			taskDto.picName = Consts.UNDECIDED;
+			taskDto.picUid = Consts.UNDECIDED;
 		}
+		taskDto.description = task.description;
 		taskDto.limitTime = new SimpleDateFormat("yyyy年MM月dd日(E) HH時mm分").format(task.limitTime);
 		taskDto.taskState = task.taskState.getString();
 		Team team = TeamService.findByTid(task.tid);

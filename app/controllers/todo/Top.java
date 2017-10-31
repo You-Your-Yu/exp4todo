@@ -62,4 +62,18 @@ public class Top extends Controller {
 
 		index();
 	}
+	/**
+	 * タスクの詳細ページ
+	 */
+	public static void taskDetail() {
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
+		Task task = TaskService.findTaskById(Long.parseLong(request.querystring.split("=")[1]));
+		TaskDto taskDto = TaskService.initTaskDto(task);
+		render(user, taskDto);
+	}
 }
