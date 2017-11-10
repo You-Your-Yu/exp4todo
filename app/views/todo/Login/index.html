@@ -7,34 +7,49 @@
 <link rel="stylesheet" href="/public/stylesheets/todo/common.css">
 </head>
 <body>
-<header id="pageHead">
-	<h1 id="siteTitle">todo</h1>
-	<p id="geeting">ようこそ、<span class="inlineTitle">todo</span>へ</p>
-	<nav class="globalNavi">
-		<ul>
-			<li class="current"><a href="./index">ログイン</a></li>
-			<li><a href="./registerUser">新規登録</a></li>
-		</ul>
-	</nav>
+<header>
+	<div class="header-container">
+		<h1 id="site-title">todo</h1>
+		<p id="greeting">ようこそ、<span class="inline-title">todo</span>へ</p>
+	</div>
 </header>
 
-<div class="errmsg">
-	#{if flash.ERRMSG != null}
-	<p style="color: red">${flash.ERRMSG}</p>
-	#{/if}
-</div>
+<nav>
+	<div class="nav-container">
+		<ul>
+			<li class="current"><a href="index">ログイン</a></li>
+			<li><a href="registerUser">新規登録</a></li>
+		</ul>
+	</div>
+</nav>
 
 <main>
-<div class="loginForm">
-	<h2 class="pageTitle">ログイン</h2>
-	<form action="postLogin" method="post">
-		<p>ユーザーID: <input name="uid" type="text" required/></p>
-		<p>パスワード: <input name="pw" type="text" required/></p>
-		<p><input type="submit" value="ログイン"/></p>
-	</form>
-</div>
+	<div class="main-container">
+		<div class="maincol">
+			<div class="errmsg">
+			#{if flash.ERRMSG != null}
+				<p>${flash.ERRMSG}</p>
+			#{/if}
+			</div>
+			<div class="login-form">
+				<h2 class="content-title">ログイン</h2>
+				<form action="postLogin" method="post">
+					<p><label>ユーザーID: <input name="uid" type="text" required/></label></p>
+					<p><label>パスワード: <input name="pw" type="password" required/></label></p>
+					<p><label><input type="submit" value="ログイン"/></label></p>
+				</form>
+			</div>
+		</div>
+		<div class="sidebar">
+			サイドバー
+		</div>
+	</div>
 </main>
+
 <footer>
-</footer>.
+	<div class="footer-container">
+		フッター
+	</div>
+</footer>
 </body>
 </html>
