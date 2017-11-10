@@ -4,41 +4,54 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>todo</title>
 <link rel="stylesheet" href="/public/stylesheets/todo/normalize.css">
-<link rel="stylesheet" href="/public/stylesheets/todo/common2.css">
+<link rel="stylesheet" href="/public/stylesheets/todo/common.css">
 </head>
 <body>
-<div id="page">
-<header id="pageHead">
-	<h1 id="siteTitle">todo</h1>
-	<p id="geeting">ようこそ、<span class="inlineTitle">todo</span>へ</p>
-	<nav class="globalNavi">
-		<ul>
-			<li><a href="./index">ログイン</a></li>
-			<li class="current"><a href="./registerUser">新規登録</a></li>
-		</ul>
-	</nav>
+<header>
+	<div class="header-container">
+		<h1 id="site-title">todo</h1>
+		<p id="greeting">ようこそ、<span class="inline-title">todo</span>へ</p>
+	</div>
 </header>
 
-<div class="errmsg">
-	#{if flash.ERRMSG != null}
-	<p style="color: red">${flash.ERRMSG}</p>
-	#{/if}
-</div>
+<nav>
+	<div class="nav-container">
+		<ul>
+			<li><a href="index">ログイン</a></li>
+			<li class="current"><a href="registerUser">新規登録</a></li>
+		</ul>
+	</div>
+</nav>
 
-<div id="pageBody">
-<div class="registerUserForm">
-	<h2 class="pageTitle">新規登録</h2>
-	<form action="./postRegisterUser" method="post">
-		<p>ユーザーID: <input name="uid" type="text" required/></p>
-		<p>パスワード: <input name="pw" type="text"/></p>
-		<p>ニックネーム: <input name="name" type="text" required/></p>
-		<p><input type="submit" value="登録"/></p>
-		<p><a href="./">戻る</a></p>
-	</form>
-</div>
+<main>
+	<div class="main-container">
+		<div class="maincol">
+			<div class="errmsg">
+			#{if flash.ERRMSG != null}
+				<p>${flash.ERRMSG}</p>
+			#{/if}
+			</div>
+			<div class="register-user-form">
+				<h2 class="content-title">新規登録</h2>
+				<form action="postRegisterUser" method="post">
+					<p><label>ユーザーID <input name="uid" type="text" required/></label></p>
+					<p><label>パスワード <input name="pw" type="text"/></label></p>
+					<p><label>ニックネーム <input name="name" type="text" required/></label></p>
+					<p><label><input type="submit" value="登録"/></label></p>
+				</form>
+			</div>
+		</div>
+		<div class="sidebar">
+			サイドバー
+		</div>
+	</div>
+</main>
 
-</div>
-</div>
+<footer>
+	<div class="footer-container">
+		フッター
+	</div>
+</footer>
 
 </body>
 </html>
