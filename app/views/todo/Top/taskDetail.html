@@ -50,9 +50,24 @@
 						<dd>${taskDto.updateTime}</dd>
 					</dl>
 					<ul class="buttons">
-						<li class="complete-button"><a href="completeTask">完了する</a></li>
-						<li class="update-button"><a href="updateTask">編集する</a></li>
-						<li class="delete-button"><a href="deleteTask">削除する</a></li>
+						<li class="complete-button">
+							<form action="completeTask" name="completeTaskForm" method="post">
+								<input type="hidden" name="taskId" value="${taskDto.id}">
+								<a href="javascript:completeTaskForm.submit()">完了する</a>
+							</form>
+						</li>
+						<li class="update-button">
+							<form action="updateTask" name="updateTaskForm" method="post">
+								<input type="hidden" name="taskId" value="${taskDto.id}">
+								<a href="javascript:updateTaskForm.submit()">編集する</a>
+							</form>
+						</li>
+						<li class="delete-button">
+							<form action="deleteTask" name="deleteTaskForm" method="post">
+								<input type="hidden" name="taskId" value="${taskDto.id}">
+								<a href="javascript:deleteTaskForm.submit()">削除する</a>
+							</form>
+						</li>
 					</ul>
 				</div>
 			</div>

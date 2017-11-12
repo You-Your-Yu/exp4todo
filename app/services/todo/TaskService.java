@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 import models.todo.consts.Consts;
+import models.todo.consts.TaskState;
 import models.todo.consts.TaskType;
 import models.todo.dto.TaskDto;
 import models.todo.entity.Task;
@@ -31,9 +32,43 @@ public class TaskService {
 	public static List<Task> findListTaskByUid(String uid) {
 		return Task.find("clientUid = ?1", uid).fetch();
 	}
-
+	/**
+	 * タスクを登録する
+	 * @param name
+	 * @param description
+	 * @param tid
+	 * @param clientUid
+	 * @param picUid
+	 * @param taskType
+	 * @param limitTime
+	 * @return
+	 */
 	public static Task registerTask(String name, String description, String tid, String clientUid, String picUid, TaskType taskType, Timestamp limitTime) {
 		Task task = new Task(name, description, tid, clientUid, picUid, taskType, limitTime);
+		task.save();
+		return task;
+	}
+
+	public static Task completeTask(Task task) {
+		task.taskState = TaskState.COMPLETED;
+		task.save();
+		return task;
+	}
+
+	public static Task deleteTask(Task task) {
+		task.delete();
+		return task;
+	}
+
+	public static Task updateTask(Task task, String name, String description, String picUid,
+			TaskType taskType, Timestamp limitTime) {
+		System.out.println(" >>>>> TaskService.updateTask");
+		task.name = name;
+		task.description = description;
+		task.picUid = picUid;
+		task.taskType = taskType;
+		task.limitTime = limitTime;
+		task.updateTime = new Timestamp(System.currentTimeMillis());
 		task.save();
 		return task;
 	}
@@ -89,7 +124,6 @@ public class TaskService {
 		for(Task task : listTask) {
 			listTaskDto.add(initTaskDto(task));
 		}
-
 		return listTaskDto;
 	}
 }

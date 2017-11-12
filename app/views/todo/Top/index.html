@@ -48,7 +48,10 @@
 						%{ for(taskDto in listTaskDto) { }%
 							<tr>
 								<td class="taskLink">
-									<a href="taskDetail?id=${taskDto.id}" >${taskDto.taskName}</a>
+									<form action="taskDetail" method="post" name="form${taskDto.id}">
+										<input type="hidden" name="taskId" value="${taskDto.id}">
+										<a href="javascript:form${taskDto.id}.submit()" >${taskDto.taskName}</a>
+									</form>
 								</td>
 								<td>${taskDto.picName}</td>
 								<td>${taskDto.taskState}</td>

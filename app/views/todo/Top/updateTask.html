@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>todo</title>
+<link rel="stylesheet" href="/public/stylesheets/todo/normalize.css">
+<link rel="stylesheet" href="/public/stylesheets/todo/common.css">
+</head>
+<body>
+<header>
+	<div class="header-container">
+		<h1 id="site-title">todo</h1>
+		<p id="greeting">こんにちは、${user.name}さん。</p>
+	</div>
+</header>
+
+<nav>
+	<div class="nav-container">
+		<ul>
+			<li class="current"><a href="index">HOME</a></li>
+			<li><a href="myPage">マイページ</a></li>
+			<li><a href="/todo.login/logout">ログアウト</a></li>
+		</ul>
+	</div>
+</nav>
+
+<main>
+	<div class="main-container">
+		<div class="maincol">
+			<div class="errmsg">
+			#{if flash.ERRMSG != null}
+				<p>${flash.ERRMSG}</p>
+			#{/if}
+			</div>
+
+			<div class="update-task">
+				<h2 class="content-title">タスク編集</h2>
+				<div class="update-task-box">
+					<form action="postUpdateTask" method="post">
+						<dl>
+							<dt>タスク名</dt>
+							<dd><input type="text" name="name" value="${task.name}" autofocus required></dd>
+							<dt>詳細</dt>
+							<dd><textarea name="description">${task.description}</textarea></dd>
+							<dt>チームに公開</dt>
+							<dd>
+								#{if task.taskType.ordinal() == 0}
+									<input type="radio" name="taskType" value="PRIVATE" checked/>しない
+									<input type="radio" name="taskType" value="PUBLIC"/>する
+								#{/if}
+								#{else}
+									<input type="radio" name="taskType" value="PRIVATE"/>しない
+									<input type="radio" name="taskType" value="PUBLIC" checked/>する
+								#{/else}
+							</dd>
+							<dt>締め切り日時</dt>
+							<dd><input type="datetime-local" name="limitTime" required></dd>
+						</dl>
+						<div class="submit">
+							<input type="hidden" name="taskId" value="${task.id}">
+							<input type="submit" class="post-update-button" value="編集を完了する">
+						</div>
+					</form>
+				</div>
+			</div>
+			<br>
+			<form action="taskDetail" name="back" method="post">
+				<input type="hidden" name="taskId" value="${task.id}">
+				<a href="javascript:back.submit()">戻る</a>
+			</form>
+			<a href="index">HOMEへ</a>
+		</div>
+		<div class="sidebar">
+			サイドバー
+		</div>
+	</div>
+</main>
+
+<footer>
+	<div class="footer-container">
+	</div>
+</footer>
+</body>
+</html>

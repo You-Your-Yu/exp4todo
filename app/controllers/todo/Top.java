@@ -58,7 +58,8 @@ public class Top extends Controller {
 					.parse(params.get("limitTime").replaceAll("T", " ")).getTime());
 			TaskService.registerTask(name, description, tid, clientUid, picUid, taskType, limitTime);
 		} catch (Exception e) {
-			flash.put(Consts.ERRMSG, e.getMessage());
+			flash.put(Consts.ERRMSG, "内部エラー: コンソールを確認してください。");
+			e.printStackTrace();
 		}
 
 		index();
@@ -73,8 +74,64 @@ public class Top extends Controller {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
-		Task task = TaskService.findTaskById(Long.parseLong(request.querystring.split("=")[1]));
+		Task task = TaskService.findTaskById(Long.parseLong(params.get("taskId")));
 		TaskDto taskDto = TaskService.initTaskDto(task);
 		render(user, taskDto);
 	}
+
+	/**
+	 * タスクを完了する
+	 */
+	public static void completeTask() {
+		Task task = TaskService.findTaskById(Long.parseLong(params.get("taskId")));
+		TaskService.completeTask(task);
+		index();
+	}
+
+	/**
+	 * タスクを削除する
+	 */
+	public static void deleteTask() {
+		Task task = TaskService.findTaskById(Long.parseLong(params.get("taskId")));
+		TaskService.deleteTask(task);
+		index();
+	}
+
+	/**
+	 * タスク編集画面へ遷移
+	 */
+	public static void updateTask() {
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
+		Task task = TaskService.findTaskById(Long.parseLong(params.get("taskId")));
+		render(user, task);
+	}
+
+	/**
+	 * タスクを編集する
+	 */
+	public static void postUpdateTask() {
+		try {
+			String picUid = null;
+			String name = params.get("name");
+			String description = params.get("description");
+			TaskType taskType = TaskType.valueOf(params.get("taskType"));
+			Timestamp limitTime = new Timestamp(new SimpleDateFormat("yyyy-MM-dd HH:mm")
+					.parse(params.get("limitTime").replaceAll("T", " ")).getTime());
+			Task task = TaskService.findTaskById(Long.parseLong(params.get("taskId")));
+			if(task == null) {
+				throw new Exception("タスクが見つかりません。");
+			}
+			TaskService.updateTask(task, name, description, picUid, taskType, limitTime);
+		} catch (Exception e) {
+			flash.put(Consts.ERRMSG, "内部エラー： コンソールを確認してください。");
+			e.printStackTrace();
+		}
+		index();
+	}
+
 }

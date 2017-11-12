@@ -106,7 +106,7 @@ main {}
 /* フォーム */
 form {}
 input[type="submit"] {
-	background-color: #EEEEEE;
+	background-color: #F2F2E5;
 	border: solid 1px #CCCCCC;
 	padding: 5px 10px;
 }
@@ -194,4 +194,39 @@ ul.buttons li a{
 	text-decoration: none;
 	border: solid 1px #CCCCCC;
 	padding: 10px 0;
+}
+
+/* タスク編集ページ */
+.update-task-box {
+	background-color: #F2F2E5;
+	padding: 10px;
+}
+.update-task-box dt {
+	font-size: 14px;
+	font-weight: 700;
+}
+.update-task-box dd {
+	border-bottom: solid 1px #CCCCCC;
+	padding-bottom: 10px;
+	margin: 10px;
+	line-height: 2;
+}
+.update-task-box input[type="text"] {
+	width: 100%;
+}
+.update-task-box textarea {
+	border: solid 1px #CCCCCC;
+	width: 100%;
+}
+.update-task-box .submit {
+	text-align: center;
+}
+.update-task-box input[type="submit"].post-update-button {
+	color: #FFFFFF;
+	background: #307EB8;
+	width: 60%;
+	padding: 10px 0;
+}
+.update-task-box input[type="submit"].post-update-button:hover {
+	background: #206EA8;
 }
