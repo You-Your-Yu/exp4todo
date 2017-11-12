@@ -39,6 +39,10 @@ public class TaskDto {
 	 */
 	public String limitTime;
 	/**
+	 * 残り時間
+	 */
+	public String remainingTime;
+	/**
 	 * タスクの状態(完了or未完了)
 	 */
 	public String taskState;
@@ -46,4 +50,8 @@ public class TaskDto {
 	 * タスクの属するチーム
 	 */
 	public String teamName;
+	/**
+	 * 更新日時
+	 */
+	public String updateTime;
 }

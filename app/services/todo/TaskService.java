@@ -4,9 +4,9 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import models.todo.consts.Consts;
-import models.todo.consts.TaskState;
 import models.todo.consts.TaskType;
 import models.todo.dto.TaskDto;
 import models.todo.entity.Task;
@@ -37,7 +37,7 @@ public class TaskService {
 		task.save();
 		return task;
 	}
-	
+
 	/**
 	 * taskから画面表示用オブジェクトtaskDtoを設定する
 	 * @param task
@@ -66,17 +66,19 @@ public class TaskService {
 			taskDto.picUid = Consts.UNDECIDED;
 		}
 		taskDto.description = task.description;
-		taskDto.limitTime = new SimpleDateFormat("yyyy年MM月dd日(E) HH時mm分").format(task.limitTime);
+		taskDto.limitTime = new SimpleDateFormat("yyyy年MM月dd日(E) HH時mm分", Locale.JAPAN).format(task.limitTime);
+		taskDto.remainingTime =
 		taskDto.taskState = task.taskState.getString();
 		Team team = TeamService.findByTid(task.tid);
 		if(team != null) {
 			taskDto.teamName = TeamService.findByTid(task.tid).name;
 		}
 		taskDto.teamName = Consts.NONE;
-		
+		taskDto.updateTime = new SimpleDateFormat("yyyy年MM月dd日(E) HH時mm分", Locale.JAPAN).format(task.updateTime);
+
 		return taskDto;
 	}
-	
+
 	/**
 	 * taskのリストからtaskDtoのリストを取得する
 	 * @param listTask
@@ -87,7 +89,7 @@ public class TaskService {
 		for(Task task : listTask) {
 			listTaskDto.add(initTaskDto(task));
 		}
-		
+
 		return listTaskDto;
 	}
 }

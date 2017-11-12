@@ -7,50 +7,58 @@
 <link rel="stylesheet" href="/public/stylesheets/todo/common.css">
 </head>
 <body>
-<div id="page">
-<header id="pageHead">
-	<h1 id="siteTitle">todo</h1>
-	<p id="geeting">新しいタスクを登録しましょう</p>
-	<nav class="globalNavi">
-		<ul>
-			<li><a href="./index">ホーム</a></li>
-			<li><a href="./myPage">マイページ</a></li>
-		</ul>
-	</nav>
+<header>
+	<div class="header-container">
+		<h1 id="site-title">todo</h1>
+		<p id="greeting">こんにちは、${user.name}さん。</p>
+	</div>
 </header>
 
-<div class="errmsg">
-	#{if flash.ERRMSG != null}
-	<p style="color: red">${flash.ERRMSG}</p>
-	#{/if}
-</div>
+<nav>
+	<div class="nav-container">
+		<ul>
+			<li class="current"><a href="index">HOME</a></li>
+			<li><a href="myPage">マイページ</a></li>
+			<li><a href="/todo.login/logout">ログアウト</a></li>
+		</ul>
+	</div>
+</nav>
 
-<div id="pageBody">
-<div class="registerTaskForm">
-	<h2 class="pageTitle">タスク登録</h2>
-	#{if flash.ERRMSG != null}
-	<p style="color: red">${flash.ERRMSG}</p>
-	#{/if}
-	<form action="postRegisterTask" method="post">
-		<dl>
-			<dt>タスク名(必須)</dt>
-			<dd><input type="text" name="name" required/></dd>
-			<dt>タスクの説明</dt>
-			<dd><textarea name="description"></textarea></dd>
-			<dt>タスクの種類(必須)</dt>
-			<dd><input type="radio" name="taskType" value="PRIVATE" checked/>個人
-				<input type="radio" name="taskType" value="PUBLIC"/>チーム</dd>
-			<dt>締め切り日時(必須)</dt>
-			<dd><input type="datetime-local" name="limitTime"></dd>
-		</dl>
-		<p><input type="submit" value="登録"/></p>
-	</form>
-</div>
+<main>
+	<div class="main-container">
+		<div class="maincol">
+			<div class="errmsg">
+			#{if flash.ERRMSG != null}
+				<p style="color: red">${flash.ERRMSG}</p>
+			#{/if}
+			</div>
+			<div class="register-task-form">
+				<h2 class="content-title">タスク登録</h2>
+				#{if flash.ERRMSG != null}
+					<p style="color: red">${flash.ERRMSG}</p>
+				#{/if}
+				<form action="postRegisterTask" method="post">
+					<p><label>タスク名(必須)</label><br><input type="text" name="name" required/></p>
+					<p><label>タスクの説明</label><br><textarea name="description"></textarea></p>
+					<p><label>チームへ公開(必須)</label><br>
+						<input type="radio" name="taskType" value="PRIVATE" checked/>しない
+						<input type="radio" name="taskType" value="PUBLIC"/>する
+					</p>
+					<p><label>締め切り日時(必須)</label><br><input type="datetime-local" name="limitTime"></p>
+					<p><input type="submit" value="タスク登録"/></p>
+				</form>
+				<a href="index">戻る</a>
+			</div>
+		</div>
+		<div class="sidebar">
+			サイドバー
+		</div>
+	</div>
+</main>
 
-<a href="./">戻る</a>
-
-</div>
-</div>
-
+<footer>
+	<div class="footer-container">
+	</div>
+</footer>
 </body>
 </html>

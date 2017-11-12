@@ -36,7 +36,9 @@ public class Top extends Controller {
 	 * タスク登録画面へ遷移
 	 */
 	public static void registerTask() {
-		render();
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		render(user);
 	}
 
 	/**
@@ -52,7 +54,7 @@ public class Top extends Controller {
 			String name = params.get("name");
 			String description = params.get("description");
 			TaskType taskType = TaskType.valueOf(params.get("taskType"));
-			Timestamp limitTime = new Timestamp(new SimpleDateFormat("yyyy-MM-dd hh:mm")
+			Timestamp limitTime = new Timestamp(new SimpleDateFormat("yyyy-MM-dd HH:mm")
 					.parse(params.get("limitTime").replaceAll("T", " ")).getTime());
 			TaskService.registerTask(name, description, tid, clientUid, picUid, taskType, limitTime);
 		} catch (Exception e) {

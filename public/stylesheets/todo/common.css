@@ -28,12 +28,13 @@ header {}
 	font-family: 'Antic Didone', serif;
 }
 /* ナビゲーション */
-nav {
+nav {}
+.nav-container {
 	border: solid #CCCCCC;
 	border-width: 1px 0;
 	padding: 10px 0;
 }
-nav ul {
+.nav-container ul {
 	display: flex;
 	justify-content: space-around;
 	list-style: none;
@@ -41,34 +42,39 @@ nav ul {
 	padding: 0;
 }
 
-nav ul li {
+.nav-container ul li {
 	flex: 1 0 auto;
 	border-left: solid 1px #CCCCCC;
 	padding: 0 10px;
-	boc-sizing: border-box;
+	box-sizing: border-box;
 	text-align: center;
 	font-size: 14px;
 	line-height: 1.429;
 }
 
-nav ul li:first-child {
+.nav-container ul li:first-child {
 	border-left: none;
 }
 
-nav ul li a {
+.nav-container ul li a {
+	color: inherit;
 	display: block;
 	padding: 5px 0;
 	text-decoration: none;
-	color: inherit;
 }
-nav ul li a:hover,
-nav ul li.current a {
+.nav-container ul li a:hover,
+.nav-container ul li.current a {
+	color: inherit;
 	background-color: #F2F2E5;
 }
 
 /* フッター */
-footer {}
-.footer-container {}
+footer {
+	margin-bottom: 100px;
+}
+.footer-container {
+	border-top: solid 1px #CCCCCC;
+}
 
 /* メインコンテンツ */
 main {}
@@ -96,4 +102,96 @@ main {}
 	flex: 0 0 200px;
 	margin: 0 20px 0 20px;
 	padding: 30px 0 30px 0;
+}
+/* フォーム */
+form {}
+input[type="submit"] {
+	background-color: #EEEEEE;
+	border: solid 1px #CCCCCC;
+	padding: 5px 10px;
+}
+input[type="submit"]:hover {
+	background-color: #EAE0D5;
+}
+/* テーブル */
+table {
+	font-size: 14px;
+	line-height: 1.429;
+	border: 1px solid #CCCCCC;
+	border-collapse: collapse;
+	width: 100%;
+}
+th, td {
+	border: 1px solid #CCCCCC;
+	padding: 5px 10px;
+}
+th {
+	background-color: #EEEEEE;
+	text-align: left;
+}
+
+/* タスク詳細ページ */
+.task-detail-box {
+	background-color: #F2F2E5;
+	padding: 10px;
+}
+.task-detail-box .task-name {
+	text-align: center;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+.task-detail-box dt {
+	font-size: 14px;
+	font-weight: 700;
+}
+.task-detail-box dd {
+	border-bottom: solid 1px #CCCCCC;
+	margin: 10px;
+	line-height: 2;
+}
+/* タスク関連ボタン */
+ul.buttons {
+	display: flex;
+	justify-content: space-around;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+ul.buttons li {
+	text-align: center;
+	flex: 1 0 auto;
+
+	box-sizing: border-box;
+}
+ul.buttons li a{
+	color: #FFFFFF;
+	display: block;
+	text-decoration: none;
+	border: solid 1px #CCCCCC;
+}
+
+ul.buttons li.complete-button {
+	background: #F5AF4E;
+}
+ul.buttons li.complete-button:hover {
+	background: #E59F3E;
+}
+ul.buttons li.update-button {
+	background: #307EB8;
+}
+ul.buttons li.update-button:hover {
+	background: #206EA8;
+}
+ul.buttons li.delete-button {
+	background: #A44F16;
+}
+ul.buttons li.delete-button:hover {
+	background: #943F06;
+}
+ul.buttons li a{
+	color: #FFFFFF;
+	display: box;
+	text-decoration: none;
+	border: solid 1px #CCCCCC;
+	padding: 10px 0;
 }

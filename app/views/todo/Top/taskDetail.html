@@ -7,46 +7,67 @@
 <link rel="stylesheet" href="/public/stylesheets/todo/common.css">
 </head>
 <body>
-
-<div id="page">
-<header id="pageHead">
-	<h1 id="siteTitle">todo</h1>
-	<p id="geeting">こんにちは、${user.name}さん</p>
-	<nav class="globalNavi">
-		<ul>
-			<li class="current"><a href="./index">ホーム</a></li>
-			<li><a href="./myPage">マイページ</a></li>
-		</ul>
-	</nav>
+<header>
+	<div class="header-container">
+		<h1 id="site-title">todo</h1>
+		<p id="greeting">こんにちは、${user.name}さん。</p>
+	</div>
 </header>
 
-<div class="errmsg">
-	#{if flash.ERRMSG != null}
-	<p style="color: red">${flash.ERRMSG}</p>
-	#{/if}
-</div>
-
-<div id="pageBody">
-<div class="taskDtail">	
-<h2 class="pageTitle">タスク詳細</h2>
-	<div class="contents">
-	<dl>
-		<dt><b>タスク名</b></dt>
-		<dd><b>${taskDto.taskName}</b></dd>
-		<dt>内容</dt>
-		<dd><div class="taskDescription">${taskDto.description}</div></dd>
-		<dt>担当者</dt>
-		<dd>${taskDto.picName} &lt;${taskDto.picUid}&gt;</dd>
-		<dt>依頼者</dt>
-		<dd>${taskDto.clientName} &lt;${taskDto.clientUid}&gt;</dd>
-	</dl>
+<nav>
+	<div class="nav-container">
+		<ul>
+			<li class="current"><a href="index">HOME</a></li>
+			<li><a href="myPage">マイページ</a></li>
+			<li><a href="/todo.login/logout">ログアウト</a></li>
+		</ul>
 	</div>
-</div>
-<a href="./">戻る</a>
-<a href="/todo.login/logout">ログアウト</a>
+</nav>
 
-</div>
-</div>
+<main>
+	<div class="main-container">
+		<div class="maincol">
+			<div class="errmsg">
+			#{if flash.ERRMSG != null}
+				<p>${flash.ERRMSG}</p>
+			#{/if}
+			</div>
 
+			<div class="task-detail">
+				<h2 class="content-title">タスク詳細</h2>
+				<div class="task-detail-box">
+					<h3 class="task-name">${taskDto.taskName}</h3>
+					<dl>
+						<dt>詳細</dt>
+						<dd><div class="taskDescription">${taskDto.description}</div></dd>
+						<dt>締め切り日時</dt>
+						<dd>${taskDto.limitTime}</dd>
+						<dt>担当者</dt>
+						<dd>${taskDto.picName} &lt;${taskDto.picUid}&gt;</dd>
+						<dt>依頼者</dt>
+						<dd>${taskDto.clientName} &lt;${taskDto.clientUid}&gt;</dd>
+						<dt>更新日時</dt>
+						<dd>${taskDto.updateTime}</dd>
+					</dl>
+					<ul class="buttons">
+						<li class="complete-button"><a href="completeTask">完了する</a></li>
+						<li class="update-button"><a href="updateTask">編集する</a></li>
+						<li class="delete-button"><a href="deleteTask">削除する</a></li>
+					</ul>
+				</div>
+			</div>
+			<br>
+			<a href="index">戻る</a>
+		</div>
+		<div class="sidebar">
+			サイドバー
+		</div>
+	</div>
+</main>
+
+<footer>
+	<div class="footer-container">
+	</div>
+</footer>
 </body>
 </html>
