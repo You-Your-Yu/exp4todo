@@ -48,18 +48,44 @@ public class TaskService {
 		task.save();
 		return task;
 	}
-
+	/**
+	 * タスクを完了する
+	 * @param task
+	 * @return
+	 */
 	public static Task completeTask(Task task) {
 		task.taskState = TaskState.COMPLETED;
 		task.save();
 		return task;
 	}
-
+	
+	public static Task incompleteTask(Task task) {
+		task.taskState = TaskState.INCOMPLETED;
+		task.save();
+		return task;
+	}
+	
+	
+	/**
+	 * タスクを削除する
+	 * @param task
+	 * @return
+	 */
 	public static Task deleteTask(Task task) {
 		task.delete();
 		return task;
 	}
 
+	/**
+	 * タスクを編集する
+	 * @param task
+	 * @param name
+	 * @param description
+	 * @param picUid
+	 * @param taskType
+	 * @param limitTime
+	 * @return
+	 */
 	public static Task updateTask(Task task, String name, String description, String picUid,
 			TaskType taskType, Timestamp limitTime) {
 		System.out.println(" >>>>> TaskService.updateTask");

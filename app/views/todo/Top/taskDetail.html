@@ -50,12 +50,22 @@
 						<dd>${taskDto.updateTime}</dd>
 					</dl>
 					<ul class="buttons">
-						<li class="complete-button">
-							<form action="completeTask" name="completeTaskForm" method="post">
-								<input type="hidden" name="taskId" value="${taskDto.id}">
-								<a href="javascript:completeTaskForm.submit()">完了する</a>
-							</form>
-						</li>
+						#{if taskDto.taskState == "未完了"}
+							<li class="complete-button">
+								<form action="completeTask" name="completeTaskForm" method="post">
+									<input type="hidden" name="taskId" value="${taskDto.id}">
+									<a href="javascript:completeTaskForm.submit()">完了する</a>
+								</form>
+							</li>
+						#{/if}
+						#{else}
+							<li class="incomplete-button">
+								<form action="incompleteTask" name="incompleteTaskForm" method="post">
+									<input type="hidden" name="taskId" value="${taskDto.id}">
+									<a href="javascript:incompleteTaskForm.submit()">完了を取り消す</a>
+								</form>
+							</li>
+						#{/else}
 						<li class="update-button">
 							<form action="updateTask" name="updateTaskForm" method="post">
 								<input type="hidden" name="taskId" value="${taskDto.id}">

@@ -173,6 +173,9 @@ ul.buttons li a{
 ul.buttons li.complete-button {
 	background: #F5AF4E;
 }
+ul.buttons li.incomplete-button {
+	background: #F5AF4E;
+}
 ul.buttons li.complete-button:hover {
 	background: #E59F3E;
 }

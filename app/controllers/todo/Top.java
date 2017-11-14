@@ -87,6 +87,15 @@ public class Top extends Controller {
 		TaskService.completeTask(task);
 		index();
 	}
+	
+	/**
+	 * タスクの完了を取り消す
+	 */
+	public static void incompleteTask() {
+		Task task = TaskService.findTaskById(Long.parseLong(params.get("taskId")));
+		TaskService.incompleteTask(task);
+		index();
+	}
 
 	/**
 	 * タスクを削除する
