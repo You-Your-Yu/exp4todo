@@ -5,6 +5,27 @@
 <title>todo</title>
 <link rel="stylesheet" href="/public/stylesheets/todo/normalize.css">
 <link rel="stylesheet" href="/public/stylesheets/todo/common.css">
+<script type="text/javascript" src="/public/javascripts/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="/public/javascripts/todo/pagenation.js"></script>
+<script>
+$(function() {
+	$('.data-row').pagenation({
+		pager		:$('pager'),
+		prevText	:'＜',
+		nextText	:'＞',
+		firstText	:'《',
+		lastText	:'》',
+		viewNum		:5,
+		pagerNum	:3,
+		ellipsis	:false,
+		linkInvalid	:true,
+		goTop		:true,
+		firstLastNav:true,
+		prevNextNav	:false
+	});
+});
+</script>
+
 </head>
 <body>
 <header>
@@ -46,7 +67,7 @@
 							<th>締め切り日時(24h制)</th>
 						</tr>
 						%{ for(taskDto in listTaskDto) { }%
-							<tr>
+							<tr class="data-row">
 								<td class="taskLink">
 									<form action="taskDetail" method="post" name="form${taskDto.id}">
 										<input type="hidden" name="taskId" value="${taskDto.id}">
@@ -59,6 +80,7 @@
 							</tr>
 						%{ } }%
 					</table>
+					<div class="pager"></div>
 				#{/else}
 				<form action="registerTask" method="post">
 					<p><input type="submit" value="タスク登録"/></p>
