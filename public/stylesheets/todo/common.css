@@ -123,8 +123,9 @@ table {
 	width: 100%;
 }
 th, td {
+	text-align: center;
 	border: 1px solid #CCCCCC;
-	padding: 5px 10px;
+	padding: 10px 10px;
 }
 th {
 	background-color: #EEEEEE;

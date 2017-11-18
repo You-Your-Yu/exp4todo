@@ -30,6 +30,8 @@ $.fn.pagination = function(config) {
 	var totalPageNum = Math.ceil(totalItemNum / o.viewNum);
 	var ellipsisFlag = false;
 
+	console.log($element.length);
+
 	// 変数設定
 	var currentIndex = 0;
 

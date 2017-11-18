@@ -7,23 +7,30 @@
 <link rel="stylesheet" href="/public/stylesheets/todo/common.css">
 <link rel="stylesheet" href="/public/stylesheets/todo/pagination.css">
 <script type="text/javascript" src="/public/javascripts/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="/public/javascripts/todo/task.js"></script>
 <script type="text/javascript" src="/public/javascripts/todo/pagination.js"></script>
 <script>
 $(function() {
-	$('.data-row').pagination({
-		pager		:$('.pager'),
-		prevText		: 'prev',
-		nextText		: 'next',
-		firstText	: 'first',
-		lastText		: 'last',
-		ellipsisText: '...',
-		viewNum		: 5,
-		pagerNum		: 3,
-		ellipsis		: false,
-		linkInvalid	: true,
-		goTop		: false,
-		firstLastNav	: true,
-		prevNextNav	: true
+	$.when(
+		// タスクの取得
+		$('#task-table').renderTaskTable()
+	).done(function() {
+		// ページネーション
+		$('.pagination-data').pagination({
+			pager		:$('.pager'),
+			prevText		: 'prev',
+			nextText		: 'next',
+			firstText	: 'first',
+			lastText		: 'last',
+			ellipsisText: '...',
+			viewNum		: 5,
+			pagerNum		: 5,
+			ellipsis		: false,
+			linkInvalid	: true,
+			goTop		: false,
+			firstLastNav	: true,
+			prevNextNav	: true
+		});
 	});
 });
 </script>
@@ -57,33 +64,17 @@ $(function() {
 			</div>
 			<div class="tasks">
 				<h2 class="content-title">タスク一覧</h2>
-				#{if listTaskDto == null || listTaskDto.isEmpty()}
-					<p>タスクはありません。</p>
-				#{/if}
-				#{else}
-					<table>
+				<!-- ajax -->
+				<table id="task-table">
 						<tr>
 							<th>名前</th>
 							<th>担当者</th>
 							<th>状態</th>
 							<th>締め切り日時(24h制)</th>
 						</tr>
-						%{ for(taskDto in listTaskDto) { }%
-							<tr class="data-row">
-								<td class="taskLink">
-									<form action="taskDetail" method="post" name="form${taskDto.id}">
-										<input type="hidden" name="taskId" value="${taskDto.id}">
-										<a href="javascript:form${taskDto.id}.submit()" >${taskDto.taskName}</a>
-									</form>
-								</td>
-								<td>${taskDto.picName}</td>
-								<td>${taskDto.taskState}</td>
-								<td>${taskDto.limitTime}</td>
-							</tr>
-						%{ } }%
-					</table>
-					<div class="pager"></div>
-				#{/else}
+				</table>
+				<div class="pager"></div>
+				<!-- /ajax -->
 				<form action="registerTask" method="post">
 					<p><input type="submit" value="タスク登録" autofocus/></p>
 				</form>

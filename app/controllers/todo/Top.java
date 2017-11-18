@@ -25,11 +25,18 @@ public class Top extends Controller {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
-		// タスクの一覧表示
+
+		render(user);
+	}
+
+	/*
+	 * タスクのJSONデータを送信
+	 */
+	public static void renderTaskTable() {
+		String uid = session.get(Consts.LOGIN);
 		List<Task> listTask = TaskService.findListTaskByUid(uid);
 		List<TaskDto> listTaskDto = TaskService.initListTaskDto(listTask);
-
-		render(user, listTaskDto);
+		renderJSON(listTaskDto);
 	}
 
 	/**

@@ -32,6 +32,15 @@ public class TaskService {
 	public static List<Task> findListTaskByUid(String uid) {
 		return Task.find("clientUid = ?1", uid).fetch();
 	}
+
+	public static List<Task> findListCompletedTaskByUid(String uid) {
+		return Task.find("clientUid = ?1 AND taskState = ?2", uid, TaskState.COMPLETED).fetch();
+	}
+
+	public static List<Task> findListIncompletedTaskByUid(String uid) {
+		return Task.find("clientUid = ?1 AND taskState = ?2", uid, TaskState.INCOMPLETED).fetch();
+	}
+
 	/**
 	 * タスクを登録する
 	 * @param name
