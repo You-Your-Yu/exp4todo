@@ -39,7 +39,7 @@
 					<h3 class="task-name">${taskDto.taskName}</h3>
 					<dl>
 						<dt>詳細</dt>
-						<dd><div class="taskDescription">${taskDto.description}</div></dd>
+						<dd><div class="taskDescription">${taskDto.description.nl2br()}</div></dd>
 						<dt>締め切り日時</dt>
 						<dd>${taskDto.limitTime}</dd>
 						<dt>担当者</dt>

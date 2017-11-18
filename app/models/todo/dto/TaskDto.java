@@ -39,6 +39,10 @@ public class TaskDto {
 	 */
 	public String limitTime;
 	/**
+	 * フォームの初期値設定用
+	 */
+	public String formatedLimitTime;
+	/**
 	 * 残り時間
 	 */
 	public String remainingTime;
@@ -46,6 +50,10 @@ public class TaskDto {
 	 * タスクの状態(完了or未完了)
 	 */
 	public String taskState;
+	/**
+	 * チームへの公開設定
+	 */
+	public String taskType;
 	/**
 	 * タスクの属するチーム
 	 */

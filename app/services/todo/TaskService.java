@@ -58,14 +58,14 @@ public class TaskService {
 		task.save();
 		return task;
 	}
-	
+
 	public static Task incompleteTask(Task task) {
 		task.taskState = TaskState.INCOMPLETED;
 		task.save();
 		return task;
 	}
-	
-	
+
+
 	/**
 	 * タスクを削除する
 	 * @param task
@@ -128,8 +128,10 @@ public class TaskService {
 		}
 		taskDto.description = task.description;
 		taskDto.limitTime = new SimpleDateFormat("yyyy年MM月dd日(E) HH時mm分", Locale.JAPAN).format(task.limitTime);
+		taskDto.formatedLimitTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(task.limitTime).replace(" ", "T");
 		taskDto.remainingTime =
 		taskDto.taskState = task.taskState.getString();
+		taskDto.taskType = task.taskType.getString();
 		Team team = TeamService.findByTid(task.tid);
 		if(team != null) {
 			taskDto.teamName = TeamService.findByTid(task.tid).name;

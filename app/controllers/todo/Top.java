@@ -87,7 +87,7 @@ public class Top extends Controller {
 		TaskService.completeTask(task);
 		index();
 	}
-	
+
 	/**
 	 * タスクの完了を取り消す
 	 */
@@ -117,7 +117,8 @@ public class Top extends Controller {
 			Login.index();
 		}
 		Task task = TaskService.findTaskById(Long.parseLong(params.get("taskId")));
-		render(user, task);
+		TaskDto taskDto = TaskService.initTaskDto(task);
+		render(user, taskDto);
 	}
 
 	/**

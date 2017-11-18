@@ -39,12 +39,12 @@
 					<form action="postUpdateTask" method="post">
 						<dl>
 							<dt>タスク名</dt>
-							<dd><input type="text" name="name" value="${task.name}" autofocus required></dd>
+							<dd><input type="text" name="name" value="${taskDto.taskName}" autofocus required></dd>
 							<dt>詳細</dt>
-							<dd><textarea name="description">${task.description}</textarea></dd>
+							<dd><textarea name="description">${taskDto.description}</textarea></dd>
 							<dt>チームに公開</dt>
 							<dd>
-								#{if task.taskType.ordinal() == 0}
+								#{if taskDto.taskType == "公開しない"}
 									<input type="radio" name="taskType" value="PRIVATE" checked/>しない
 									<input type="radio" name="taskType" value="PUBLIC"/>する
 								#{/if}
@@ -54,10 +54,10 @@
 								#{/else}
 							</dd>
 							<dt>締め切り日時</dt>
-							<dd><input type="datetime-local" name="limitTime" required></dd>
+							<dd><input type="datetime-local" name="limitTime" value="${taskDto.formatedLimitTime}" required></dd>
 						</dl>
 						<div class="submit">
-							<input type="hidden" name="taskId" value="${task.id}">
+							<input type="hidden" name="taskId" value="${taskDto.id}">
 							<input type="submit" class="submit-button" value="編集を完了する">
 						</div>
 					</form>
@@ -65,7 +65,7 @@
 			</div>
 			<br>
 			<form action="taskDetail" name="back" method="post">
-				<input type="hidden" name="taskId" value="${task.id}">
+				<input type="hidden" name="taskId" value="${taskDto.id}">
 				<a href="javascript:back.submit()">戻る</a>
 			</form>
 			<a href="index">HOMEへ</a>

@@ -152,6 +152,10 @@ th {
 	margin: 10px;
 	line-height: 2;
 }
+
+.box .taskDescription {
+	line-height: 1.5;
+}
 /* タスク詳細ページ */
 ul.buttons {
 	display: flex;
@@ -208,8 +212,11 @@ ul.buttons li a.delete-button:hover {
 	width: 100%;
 }
 .box textarea {
+	font-size: 14px;
+	line-height: 1.2;
 	border: solid 1px #CCCCCC;
 	width: 100%;
+	height: 100px;
 }
 .box .submit {
 	text-align: center;
