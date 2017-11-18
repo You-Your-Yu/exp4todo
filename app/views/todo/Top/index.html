@@ -5,23 +5,25 @@
 <title>todo</title>
 <link rel="stylesheet" href="/public/stylesheets/todo/normalize.css">
 <link rel="stylesheet" href="/public/stylesheets/todo/common.css">
+<link rel="stylesheet" href="/public/stylesheets/todo/pagination.css">
 <script type="text/javascript" src="/public/javascripts/jquery-2.1.4.js"></script>
-<script type="text/javascript" src="/public/javascripts/todo/pagenation.js"></script>
+<script type="text/javascript" src="/public/javascripts/todo/pagination.js"></script>
 <script>
 $(function() {
-	$('.data-row').pagenation({
-		pager		:$('pager'),
-		prevText	:'＜',
-		nextText	:'＞',
-		firstText	:'《',
-		lastText	:'》',
-		viewNum		:5,
-		pagerNum	:3,
-		ellipsis	:false,
-		linkInvalid	:true,
-		goTop		:true,
-		firstLastNav:true,
-		prevNextNav	:false
+	$('.data-row').pagination({
+		pager		:$('.pager'),
+		prevText		: 'prev',
+		nextText		: 'next',
+		firstText	: 'first',
+		lastText		: 'last',
+		ellipsisText: '...',
+		viewNum		: 5,
+		pagerNum		: 3,
+		ellipsis		: false,
+		linkInvalid	: true,
+		goTop		: false,
+		firstLastNav	: true,
+		prevNextNav	: true
 	});
 });
 </script>
@@ -83,7 +85,7 @@ $(function() {
 					<div class="pager"></div>
 				#{/else}
 				<form action="registerTask" method="post">
-					<p><input type="submit" value="タスク登録"/></p>
+					<p><input type="submit" value="タスク登録" autofocus/></p>
 				</form>
 			</div>
 		</div>

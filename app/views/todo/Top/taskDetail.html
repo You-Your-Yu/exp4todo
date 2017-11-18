@@ -35,7 +35,7 @@
 
 			<div class="task-detail">
 				<h2 class="content-title">タスク詳細</h2>
-				<div class="task-detail-box">
+				<div class="box">
 					<h3 class="task-name">${taskDto.taskName}</h3>
 					<dl>
 						<dt>詳細</dt>
@@ -51,31 +51,31 @@
 					</dl>
 					<ul class="buttons">
 						#{if taskDto.taskState == "未完了"}
-							<li class="complete-button">
+							<li>
 								<form action="completeTask" name="completeTaskForm" method="post">
 									<input type="hidden" name="taskId" value="${taskDto.id}">
-									<a href="javascript:completeTaskForm.submit()">完了する</a>
+									<a class="complete-button" href="javascript:completeTaskForm.submit()">完了する</a>
 								</form>
 							</li>
 						#{/if}
 						#{else}
-							<li class="incomplete-button">
+							<li>
 								<form action="incompleteTask" name="incompleteTaskForm" method="post">
 									<input type="hidden" name="taskId" value="${taskDto.id}">
-									<a href="javascript:incompleteTaskForm.submit()">完了を取り消す</a>
+									<a class="incomplete-button" href="javascript:incompleteTaskForm.submit()">完了を取り消す</a>
 								</form>
 							</li>
 						#{/else}
-						<li class="update-button">
+						<li>
 							<form action="updateTask" name="updateTaskForm" method="post">
 								<input type="hidden" name="taskId" value="${taskDto.id}">
-								<a href="javascript:updateTaskForm.submit()">編集する</a>
+								<a class="update-button" href="javascript:updateTaskForm.submit()">編集する</a>
 							</form>
 						</li>
-						<li class="delete-button">
+						<li>
 							<form action="deleteTask" name="deleteTaskForm" method="post">
 								<input type="hidden" name="taskId" value="${taskDto.id}">
-								<a href="javascript:deleteTaskForm.submit()">削除する</a>
+								<a class="delete-button" href="javascript:deleteTaskForm.submit()">削除する</a>
 							</form>
 						</li>
 					</ul>

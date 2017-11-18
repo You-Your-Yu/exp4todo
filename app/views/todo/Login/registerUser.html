@@ -33,13 +33,25 @@
 			</div>
 			<div class="register-user-form">
 				<h2 class="content-title">新規登録</h2>
-				<form action="postRegisterUser" method="post">
-					<p><label>ユーザーID<br><input name="uid" type="text" required/></label></p>
-					<p><label>パスワード<br><input name="pw" type="text"/></label></p>
-					<p><label>ニックネーム<br><input name="name" type="text" required/></label></p>
-					<p><input type="submit" value="新規登録"/></p>
-				</form>
+				<div class="box">
+					<form action="postRegisterUser" method="post">
+						<dl>
+							<dt>ユーザーID</dt>
+							<dd><input name="uid" type="text" autofocus required/></dd>
+							<dt>パスワード</dt>
+							<dd><input name="pw" type="password"/></dd>
+							<dt>ニックネーム</dt>
+							<dd><input name="name" type="text" required/></dd>
+						</dl>
+						<div class="submit">
+							<input type="submit" class="submit-button" value="新規登録"/>
+						</div>
+					</form>
+				</div>
 			</div>
+		</div>
+		<div class="sidebar">
+			サイドバー
 		</div>
 	</div>
 </main>

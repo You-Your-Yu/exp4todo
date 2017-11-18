@@ -106,8 +106,9 @@ main {}
 /* フォーム */
 form {}
 input[type="submit"] {
-	background-color: #F2F2E5;
+	background-color: #EEEEEE;
 	border: solid 1px #CCCCCC;
+	border-radius: 3px;
 	padding: 5px 10px;
 }
 input[type="submit"]:hover {
@@ -130,28 +131,32 @@ th {
 	text-align: left;
 }
 
-/* タスク詳細ページ */
-.task-detail-box {
+
+
+/* タスク関連 */
+.box {
 	background-color: #F2F2E5;
 	padding: 10px;
 }
-.task-detail-box .task-name {
+.box .task-name {
 	text-align: center;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
 }
-.task-detail-box dt {
+.box dt {
 	font-size: 14px;
 	font-weight: 700;
 }
-.task-detail-box dd {
+.box dd {
+	padding-bottom: 10px;
 	border-bottom: solid 1px #CCCCCC;
 	margin: 10px;
 	line-height: 2;
 }
-/* タスク関連ボタン */
+/* タスク詳細ページ */
 ul.buttons {
 	display: flex;
 	justify-content: space-around;
+	overflow: hidden;
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -160,7 +165,7 @@ ul.buttons {
 ul.buttons li {
 	text-align: center;
 	flex: 1 0 auto;
-
+	border-radius: 3px;
 	box-sizing: border-box;
 }
 ul.buttons li a{
@@ -168,68 +173,57 @@ ul.buttons li a{
 	display: block;
 	text-decoration: none;
 	border: solid 1px #CCCCCC;
-}
-
-ul.buttons li.complete-button {
-	background: #F5AF4E;
-}
-ul.buttons li.incomplete-button {
-	background: #F5AF4E;
-}
-ul.buttons li.complete-button:hover {
-	background: #E59F3E;
-}
-ul.buttons li.update-button {
-	background: #307EB8;
-}
-ul.buttons li.update-button:hover {
-	background: #206EA8;
-}
-ul.buttons li.delete-button {
-	background: #A44F16;
-}
-ul.buttons li.delete-button:hover {
-	background: #943F06;
-}
-ul.buttons li a{
-	color: #FFFFFF;
-	display: box;
-	text-decoration: none;
-	border: solid 1px #CCCCCC;
+	border-radius: 3px;
 	padding: 10px 0;
 }
 
-/* タスク編集ページ */
-.update-task-box {
-	background-color: #F2F2E5;
-	padding: 10px;
+ul.buttons li a.complete-button {
+	background: #F5AF4E;
 }
-.update-task-box dt {
-	font-size: 14px;
-	font-weight: 700;
+ul.buttons li a.complete-button:hover {
+	background: #E59F3E;
 }
-.update-task-box dd {
-	border-bottom: solid 1px #CCCCCC;
-	padding-bottom: 10px;
-	margin: 10px;
-	line-height: 2;
+ul.buttons li a.incomplete-button {
+	background: #F5AF4E;
 }
-.update-task-box input[type="text"] {
+ul.buttons li a.incomplete-button:hover {
+	background: #E59F3E;
+}
+ul.buttons li a.update-button {
+	background: #307EB8;
+}
+ul.buttons li a.update-button:hover {
+	background: #206EA8;
+}
+ul.buttons li a.delete-button {
+	background: #A44F16;
+}
+ul.buttons li a.delete-button:hover {
+	background: #943F06;
+}
+
+
+/* タスク登録ページ ＆ タスク編集ページ */
+.box input[type="text"] {
 	width: 100%;
 }
-.update-task-box textarea {
+.box textarea {
 	border: solid 1px #CCCCCC;
 	width: 100%;
 }
-.update-task-box .submit {
+.box .submit {
 	text-align: center;
 }
-.update-task-box input[type="submit"].post-update-button {
+.box input[type="submit"].submit-button {
 	color: #FFFFFF;
 	background: #307EB8;
 	width: 60%;
 	padding: 10px 0;
 }
-.update-task-box input[type="submit"].post-update-button:hover {
+.box input[type="submit"].submit-button:hover {
 	background: #206EA8;
+}
+/* ログインページ */
+.box input[type="password"] {
+	width: 100%;
 }

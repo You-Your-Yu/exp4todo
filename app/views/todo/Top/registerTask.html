@@ -5,6 +5,8 @@
 <title>todo</title>
 <link rel="stylesheet" href="/public/stylesheets/todo/normalize.css">
 <link rel="stylesheet" href="/public/stylesheets/todo/common.css">
+<script type="text/javascript" src="/public/javascripts/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="/public/javascripts/todo/getNow.js"></script>
 </head>
 <body>
 <header>
@@ -32,21 +34,29 @@
 				<p style="color: red">${flash.ERRMSG}</p>
 			#{/if}
 			</div>
-			<div class="register-task-form">
+			<div class="register-task">
 				<h2 class="content-title">タスク登録</h2>
-				#{if flash.ERRMSG != null}
-					<p style="color: red">${flash.ERRMSG}</p>
-				#{/if}
-				<form action="postRegisterTask" method="post">
-					<p><label>タスク名(必須)</label><br><input type="text" name="name" required/></p>
-					<p><label>タスクの説明</label><br><textarea name="description"></textarea></p>
-					<p><label>チームに公開(必須)</label><br>
-						<input type="radio" name="taskType" value="PRIVATE" checked/>しない
-						<input type="radio" name="taskType" value="PUBLIC"/>する
-					</p>
-					<p><label>締め切り日時(必須)</label><br><input type="datetime-local" name="limitTime"></p>
-					<p><input type="submit" value="タスク登録"/></p>
-				</form>
+				<div class="box">
+					<form action="postRegisterTask" method="post">
+						<dl>
+							<dt>タスク名(必須)</dt>
+							<dd><input type="text" name="name" autofocus required/></dd>
+							<dt>詳細</dt>
+							<dd><textarea name="description"></textarea></dd>
+							<dt>チームに公開(必須)</dt>
+							<dd>
+								<input type="radio" name="taskType" value="PRIVATE" checked/>しない
+								<input type="radio" name="taskType" value="PUBLIC"/>する
+							</dd>
+							<dt>締め切り日時(必須)</dt>
+							<dd><input type="datetime-local" class="datetime-local" name="limitTime"></dd>
+						</dl>
+						<div class="submit">
+							<input type="submit" class="submit-button" value="タスク登録"/>
+						</div>
+					</form>
+				</div>
+				<br>
 				<a href="index">戻る</a>
 			</div>
 		</div>
