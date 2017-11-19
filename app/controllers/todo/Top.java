@@ -32,7 +32,7 @@ public class Top extends Controller {
 	/*
 	 * タスクのJSONデータを送信
 	 */
-	public static void renderTaskTable() {
+	public static void getTaskData() {
 		String uid = session.get(Consts.LOGIN);
 		List<Task> listTask = TaskService.findListTaskByUid(uid);
 		List<TaskDto> listTaskDto = TaskService.initListTaskDto(listTask);

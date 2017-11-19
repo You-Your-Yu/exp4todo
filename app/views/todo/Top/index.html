@@ -11,12 +11,8 @@
 <script type="text/javascript" src="/public/javascripts/todo/pagination.js"></script>
 <script>
 $(function() {
-	$.when(
-		// タスクの取得
-		$('#task-table').renderTaskTable()
-	).done(function() {
-		// ページネーション
-		$('.pagination-data').pagination({
+	var taskData;
+	var opt = {
 			pager		:$('.pager'),
 			prevText		: 'prev',
 			nextText		: 'next',
@@ -30,6 +26,59 @@ $(function() {
 			goTop		: false,
 			firstLastNav	: true,
 			prevNextNav	: true
+		}
+	$.when(function() {
+		var dfd = jQuery.Deferred();
+		// タスクデータの取得
+		$.get('getTaskData', function(data) {
+			taskData = data;
+			console.dir(taskData);
+			dfd.resolve();
+		});
+		return dfd.promise();
+	}()).done(function() {
+		$.when(function() {
+			var dfd = jQuery.Deferred();
+			(function() {
+				renderTaskTable(filterData(taskData, getValidFilterNames()));
+				dfd.resolve();
+			}());
+			return dfd.promise();
+		}()).done(function() {
+			// ページネーション
+			$('.pagination-data').pagination(opt);
+
+			// フィルターボタン
+			$('.filter-btn').on('click', 'li > a', function(event) {
+				event.preventDefault();
+				var li = $(this).parent();
+				// ボタンのON/OFFを変更
+				if(li.hasClass('on')) {
+					console.log('on -> off');
+					li
+					.removeClass('on')
+					.addClass('off');
+				}
+				else {
+					console.log('off -> on');
+					li
+					.removeClass('off')
+					.addClass('on');
+				}
+				// タスクテーブルの再描画
+				renderTaskTable(filterData(taskData, getValidFilterNames()));
+				// ページネーション
+				$('.pagination-data').pagination(opt);
+				// タスク詳細へのリンク
+				$('a.task-name-anchor').on('click', function() {
+					$(this).closest('form').submit();
+				});
+			});
+
+			// タスク詳細へのリンク
+			$('a.task-name-anchor').on('click', function() {
+				$(this).closest('form').submit();
+			});
 		});
 	});
 });
@@ -64,7 +113,13 @@ $(function() {
 			</div>
 			<div class="tasks">
 				<h2 class="content-title">タスク一覧</h2>
-				<!-- ajax -->
+				<div class="wrapper-filter-btn">
+					<ul class="filter-btn">
+						<li id="incompleted" class="incompleted on"><a href="#">未完了</a></li>
+						<li id="completed" class="completed off"><a href="#">完了済み</a></li>
+						<li id="all" class="all off"><a href="#">すべて</a></li>
+					</ul>
+				</div>
 				<table id="task-table">
 						<tr>
 							<th>名前</th>
@@ -72,9 +127,9 @@ $(function() {
 							<th>状態</th>
 							<th>締め切り日時(24h制)</th>
 						</tr>
+						<!-- ajaxでテーブルを生成 -->
 				</table>
 				<div class="pager"></div>
-				<!-- /ajax -->
 				<form action="registerTask" method="post">
 					<p><input type="submit" value="タスク登録" autofocus/></p>
 				</form>

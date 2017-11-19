@@ -116,6 +116,7 @@ input[type="submit"]:hover {
 }
 /* テーブル */
 table {
+	margin: 0;
 	font-size: 14px;
 	line-height: 1.429;
 	border: 1px solid #CCCCCC;
@@ -130,6 +131,40 @@ th, td {
 th {
 	background-color: #EEEEEE;
 	text-align: left;
+}
+
+/* フィルターボタン */
+.wrapper-filter-btn {
+	margin: 0;
+}
+ul.filter-btn {
+	display: flex;
+	justify-content: flex-end;
+	list-style: none;
+	margin: 0;
+}
+ul.filter-btn li {
+	margin-left: 2px;
+}
+ul.filter-btn li a {
+	text-decoration: none;
+	color: #FFFFFF;
+	display: block;
+	padding: 3px 10px;
+	border-bottom: none;
+	border-radius: 5px 5px 0 0;
+}
+ul.filter-btn li.incompleted a {
+	background: #2491CF;
+}
+ul.filter-btn li.completed a {
+	background: #E57B6D;
+}
+ul.filter-btn li.all a {
+	background: #87B62E;
+}
+ul.filter-btn li.off a {
+	background: #AAAAAA;
 }
 
 
