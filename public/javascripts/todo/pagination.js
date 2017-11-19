@@ -69,6 +69,10 @@ $.fn.pagination = function(config) {
 	if(o.linkInvalid) {
 		$('.prev').addClass('invalid');
 		$('.first').addClass('invalid');
+		if($pagerInner.length <= 1) {
+			$('.next').addClass('invalid');
+			$('.last').addClass('invalid');
+		}
 	}
 	if(o.ellipsis) {
 		if(ellipsisFlag) {
