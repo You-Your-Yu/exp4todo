@@ -165,8 +165,53 @@ ul.filter-btn li.all a {
 ul.filter-btn li.off a {
 	background: #AAAAAA;
 }
-
-
+/* [完了する] [名前変更] [削除する] ボタン */
+ul.btns {
+	list-style: none;
+	display: flex;
+	justify-content: space-around;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+ul.btns li {
+	box-sizing: border-box;
+	margin: 0;
+	//flex: 1 0 auto;
+}
+ul.btns li button {
+	color: #FFFFFF;
+	font-size: 12px;
+	padding: 5px;
+	margin: 0;
+	//border: solid 1px #CCCCCC;
+	border: none;
+	border-radius: 0px;
+}
+ul.btns li button.complete-btn {
+	background: #F5AF4E;
+}
+ul.btns li button.complete-btn:hover {
+	background: #E59F3E;
+}
+ul.btns li button.incomplete-btn {
+	background: #F5AF4E;
+}
+ul.btns li button.incomplete-btn:hover {
+	background: #E59F3E;
+}
+ul.btns li button.edit-name-btn {
+	background: #307EB8;
+}
+ul.btns li button.edit-name-btn:hover {
+	background: #206EA8;
+}
+ul.btns li button.delete-btn {
+	background: #A44F16;
+}
+ul.btns li button.delete-btn:hover {
+	background: #943F06;
+}
 
 /* タスク関連 */
 .box {

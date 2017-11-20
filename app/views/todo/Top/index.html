@@ -69,15 +69,6 @@ $(function() {
 				renderTaskTable(filterData(taskData, getValidFilterNames()));
 				// ページネーション
 				$('.pagination-data').pagination(opt);
-				// タスク詳細へのリンク
-				$('a.task-name-anchor').on('click', function() {
-					$(this).closest('form').submit();
-				});
-			});
-
-			// タスク詳細へのリンク
-			$('a.task-name-anchor').on('click', function() {
-				$(this).closest('form').submit();
 			});
 		});
 	});
@@ -126,6 +117,7 @@ $(function() {
 							<th>担当者</th>
 							<th>状態</th>
 							<th>締め切り日時(24h制)</th>
+							<th></th>
 						</tr>
 						<!-- ajaxでテーブルを生成 -->
 				</table>
