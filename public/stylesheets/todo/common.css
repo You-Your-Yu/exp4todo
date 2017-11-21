@@ -167,6 +167,7 @@ ul.filter-btn li.off a {
 }
 /* [完了する] [名前変更] [削除する] ボタン */
 ul.btns {
+	overflow: visible;
 	list-style: none;
 	display: flex;
 	justify-content: space-around;
@@ -177,7 +178,7 @@ ul.btns {
 ul.btns li {
 	box-sizing: border-box;
 	margin: 0;
-	//flex: 1 0 auto;
+	flex: 1 0 auto;
 }
 ul.btns li button {
 	color: #FFFFFF;
@@ -187,6 +188,7 @@ ul.btns li button {
 	//border: solid 1px #CCCCCC;
 	border: none;
 	border-radius: 0px;
+	width: 100%;
 }
 ul.btns li button.complete-btn {
 	background: #F5AF4E;
