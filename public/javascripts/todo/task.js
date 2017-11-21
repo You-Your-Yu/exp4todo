@@ -1,4 +1,24 @@
-
+// 更新時にサーバーから受けとるタスクデータ
+var taskData;
+// 定数
+const COMPLETED = '完了済み';
+const INCOMPLETED = '未完了';
+// ページネーションのオプション
+var opt = {
+		pager		:$('.pager'),
+		prevText		: 'prev',
+		nextText		: 'next',
+		firstText	: 'first',
+		lastText		: 'last',
+		ellipsisText: '...',
+		viewNum		: 5,
+		pagerNum		: 5,
+		ellipsis		: false,
+		linkInvalid	: true,
+		goTop		: false,
+		firstLastNav	: true,
+		prevNextNav	: true
+	}
 /*
  * タスクテーブルの描画
  */
@@ -30,7 +50,7 @@ function renderTaskTable(data) {
 		var $picName = $('<td></td>').text(task.picName);
 		var $taskState = $('<td></td>').text(task.taskState);
 		var $limitTime = $('<td></td>').text(task.limitTime);
-		var $btns = createBtns(task.taskState);
+		var $btns = createBtns(task);
 
 		$('<tr></tr>')
 		.addClass('pagination-data')
@@ -43,17 +63,18 @@ function renderTaskTable(data) {
 	});
 }
 
-function createBtns(taskState) {
-	var script1a = 'completeTaskWithoutST()';
-	var script1b = 'incompleteTaskWithoutST()';
-	var script2 = 'editTaskNameWithoutST()';
-	var script3 = 'delteTaskWithoutST()';
+function createBtns(task) {
+	var taskId = task.id;
+	var script1a = 'completeTaskWithoutST(' + taskId +  ')';
+	var script1b = 'incompleteTaskWithoutST(' + taskId + ')';
+	var script2 = 'renameTaskWithoutST(' + taskId + ')';
+	var script3 = 'delteTaskWithoutST(' + taskId + ')';
 
 	var ret = $('<td></td>');
 	var ul = $('<ul></ul>').addClass('btns');
 	var li1 = $('<li></li>');
 	var btn1 = $('<button></button>').attr('type', 'button');
-	if(taskState == '未完了') {
+	if(task.taskState == INCOMPLETED) {
 		btn1.text('完了する').addClass('complete-btn').attr('onClick', script1a);
 	}
 	else {
@@ -71,18 +92,57 @@ function createBtns(taskState) {
 	ret.append(ul);
 	return ret;
 }
-
-function completeTaskWithoutST() {
+/*
+ * 画面遷移なしにタスクを完了する
+ */
+function completeTaskWithoutST(taskId) {
 	console.log('completeTaskWithoutST');
+	$.post('completeTaskWithoutST', {'taskId': taskId});	
+	$(taskData).each(function() {
+		var task = this;
+		if(task.id == taskId) {
+			task.taskState = COMPLETED;
+			return false;
+		}
+	});
+	// タスクテーブルの再描画
+	renderTaskTable(filterData(taskData, getValidFilterNames()));
+	// ページネーション
+	$('.pagination-data').pagination(opt);
 }
-function incompleteTaskWithoutST() {
+function incompleteTaskWithoutST(taskId) {
 	console.log('incompleteTaskWithoutST');
+	$.post('incompleteTaskWithoutST', {'taskId': taskId});	
+	$(taskData).each(function() {
+		var task = this;
+		if(task.id == taskId) {
+			task.taskState = INCOMPLETED;
+			return false;
+		}
+	});
+	// タスクテーブルの再描画
+	renderTaskTable(filterData(taskData, getValidFilterNames()));
+	// ページネーション
+	$('.pagination-data').pagination(opt);
 }
-function editTaskNameWithoutST() {
-	console.log('editTaskNameWithoutST');
+function renameTaskWithoutST(taskId) {
+	console.log('renameTaskWithoutST');
 }
-function delteTaskWithoutST() {
+function delteTaskWithoutST(taskId) {
 	console.log('delteTaskWithoutST');
+	$.post('deleteTaskWithoutST', {'taskId': taskId});	
+	$(taskData).each(function() {
+		var task = this;
+		if(task.id == taskId) {
+			var i = taskData.indexOf(task);
+			taskData.splice(i, 1);
+			return false;
+		}
+	});
+	// タスクテーブルの再描画
+	renderTaskTable(filterData(taskData, getValidFilterNames()));
+	// ページネーション
+	$('.pagination-data').pagination(opt);
 }
 
 function filterData(data, filterNames) {
@@ -95,7 +155,7 @@ function filterData(data, filterNames) {
 			console.log('case incompleted:');
 			$(data).each(function() {
 				var currentData = this;
-				if(currentData.taskState == '未完了') {
+				if(currentData.taskState == INCOMPLETED) {
 					newData.add(currentData);
 				}
 			});
@@ -104,7 +164,7 @@ function filterData(data, filterNames) {
 			console.log('case completed:');
 			$(data).each(function() {
 				var currentData = this;
-				if(currentData.taskState == '完了済み') {
+				if(currentData.taskState == COMPLETED) {
 					newData.add(currentData);
 				}
 			});
@@ -138,3 +198,54 @@ function getValidFilterNames() {
 	console.dir(ret);
 	return ret;
 }
+/*
+ * ページ読み込み後に実行される処理
+ */
+$(function() {
+	$.when(function() {
+		var dfd = jQuery.Deferred();
+		// タスクデータの取得
+		$.get('getTaskData', function(data) {
+			taskData = data;
+			console.dir(taskData);
+			dfd.resolve();
+		});
+		return dfd.promise();
+	}()).done(function() {
+		$.when(function() {
+			var dfd = jQuery.Deferred();
+			(function() {
+				renderTaskTable(filterData(taskData, getValidFilterNames()));
+				dfd.resolve();
+			}());
+			return dfd.promise();
+		}()).done(function() {
+			// ページネーション
+			$('.pagination-data').pagination(opt);
+
+			// フィルターボタン
+			$('.filter-btn').on('click', 'li > a', function(event) {
+				event.preventDefault();
+				var li = $(this).parent();
+				// ボタンのON/OFFを変更
+				if(li.hasClass('on')) {
+					console.log('on -> off');
+					li
+					.removeClass('on')
+					.addClass('off');
+				}
+				else {
+					console.log('off -> on');
+					li
+					.removeClass('off')
+					.addClass('on');
+				}
+				// タスクテーブルの再描画
+				renderTaskTable(filterData(taskData, getValidFilterNames()));
+				// ページネーション
+				$('.pagination-data').pagination(opt);
+			});
+		});
+	});
+});
+

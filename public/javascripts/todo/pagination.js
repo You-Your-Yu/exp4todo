@@ -27,6 +27,7 @@ $.fn.pagination = function(config) {
 
 	// 値取得
 	var totalItemNum = $element.length;
+	console.log('totalItemNum = ' + totalItemNum);
 	var totalPageNum = Math.ceil(totalItemNum / o.viewNum);
 	var ellipsisFlag = false;
 

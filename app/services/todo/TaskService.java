@@ -107,6 +107,12 @@ public class TaskService {
 		task.save();
 		return task;
 	}
+	
+	public static Task renameTask(Task task, String newName) {
+		task.name = newName;
+		task.save();
+		return task;
+	}
 
 	/**
 	 * taskから画面表示用オブジェクトtaskDtoを設定する

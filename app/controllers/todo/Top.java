@@ -150,5 +150,39 @@ public class Top extends Controller {
 		}
 		index();
 	}
+	
+	/**
+	 * 画面遷移なしにタスクを完了する
+	 */
+	public static void completeTaskWithoutST() {
+		Long taskId = Long.parseLong(params.get("taskId"));
+		Task task = TaskService.findTaskById(taskId);
+		TaskService.completeTask(task);
+	}
+	/**
+	 * 画面遷移なしにタスクの完了を取り消す
+	 */
+	public static void incompleteTaskWithoutST() {
+		Long taskId = Long.parseLong(params.get("taskId"));
+		Task task = TaskService.findTaskById(taskId);
+		TaskService.incompleteTask(task);
+	}
+	/**
+	 * 画面遷移なしにタスク名を編集する
+	 */
+	public static void renameTaskWithoutST() {
+		Long taskId = Long.parseLong(params.get("taskId"));
+		String newName = params.get("newName");
+		Task task = TaskService.findTaskById(taskId);
+		TaskService.renameTask(task, newName);
+	}
+	/**
+	 * 画面遷移なしにタスクを削除する
+	 */
+	public static void deleteTaskWithoutST() {
+		Long taskId = Long.parseLong(params.get("taskId"));
+		Task task = TaskService.findTaskById(taskId);
+		TaskService.deleteTask(task);
+	}
 
 }
