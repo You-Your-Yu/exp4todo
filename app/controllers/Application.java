@@ -6,11 +6,11 @@ import play.mvc.Controller;
 public class Application extends Controller {
 
     public static void index() {
-        render();
+    	Index.index();
     }
 
     public static void todo() {
-    		Index.index();
+    	Index.index();
     }
 
 }
