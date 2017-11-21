@@ -110,6 +110,7 @@ function completeTaskWithoutST(taskId) {
 	// ページネーション
 	$('.pagination-data').pagination(opt);
 }
+/* 画面遷移なしにタスクの完了を取り消す */
 function incompleteTaskWithoutST(taskId) {
 	console.log('incompleteTaskWithoutST');
 	$.post('incompleteTaskWithoutST', {'taskId': taskId});	
@@ -125,9 +126,22 @@ function incompleteTaskWithoutST(taskId) {
 	// ページネーション
 	$('.pagination-data').pagination(opt);
 }
+/* 画面遷移なしにタスク名を変更する */
 function renameTaskWithoutST(taskId) {
-	console.log('renameTaskWithoutST');
+	var result = prompt('新しい名前を入力してください。', '新しい名前');
+	if(result) {
+		console.log('renameTaskWithoutST');
+		$.post('renameTaskWithoutST', {'taskId': taskId});
+		$(taskData).each(function() {
+			var task = this;
+			if(task.id == taskId) {
+				task.taskName = result;
+				return false;
+			}
+		});
+	}
 }
+/* 画面遷移なしにタスクを削除する */
 function delteTaskWithoutST(taskId) {
 	console.log('delteTaskWithoutST');
 	$.post('deleteTaskWithoutST', {'taskId': taskId});	
