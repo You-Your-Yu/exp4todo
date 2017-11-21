@@ -28,7 +28,7 @@ public class Login extends Controller {
 			index();
 		}
 		// pwのダイジェスト作成
-		pw = DigestGenerator.getSHA256(pw + user.name + user.fixedSalt);
+		pw = DigestGenerator.getSHA256(pw + uid + user.fixedSalt);
 		if(!pw.equals(user.pw)) {
 			flash.put(Consts.ERRMSG, "パスワードが間違っています。");
 			index();
