@@ -52,4 +52,9 @@ public class UserService {
 		user.tid = tid;
 		user.save();
 	}
+
+	public static void leaveTeam(User user) {
+		user.tid = null;
+		user.save();
+	}
 }

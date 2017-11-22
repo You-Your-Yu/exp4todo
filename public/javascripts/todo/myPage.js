@@ -27,6 +27,7 @@ $(function() {
 			        		if(conf) {
 			        			$.post('joinTeam', {'tid': response.tid})
 			        			.done(function() {
+			        				$('.team').text(response.name);
 			        				alert('参加しました。')
 			        			});
 			        		}
@@ -39,7 +40,17 @@ $(function() {
 		}
 	}
 	function leaveTeam() {
-
+		var conf = confirm('現在所属しているチームから抜けますか？');
+		if(conf) {
+			$.post('leaveTeam')
+			.done(function() {
+				$('.team').text('所属なし');
+				alert('チームから離脱しました。');
+			})
+			.fail(function() {
+				alert('ajax通信に失敗しました。');
+			});
+		}
 	}
 	function changePW() {
 		var currentPW = prompt('現在のパスワードを入力してください。');
@@ -85,6 +96,7 @@ $(function() {
 	});
 	$('.leave-team').on('click', function(event) {
 		event.preventDefault();
+		leaveTeam();
 	});
 	$('.change-pw').on('click', function(event) {
 		event.preventDefault();

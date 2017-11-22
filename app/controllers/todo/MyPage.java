@@ -95,7 +95,18 @@ public class MyPage extends Controller {
 		}
 		String tid = params.get("tid");
 		UserService.setTeam(user, tid);
-		index();
+	}
+	/**
+	 * チームから離脱する
+	 */
+	public static void leaveTeam() {
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
+		UserService.leaveTeam(user);
 	}
 
 	/**

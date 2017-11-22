@@ -46,7 +46,7 @@
 						<dt>所属チーム</dt>
 						<dd>
 							#{if user.tid != null}
-								${user.tid}
+								<a href="#" class="team">${user.tid} (ID: ${user.tid})</a>
 							#{/if}
 							#{else}
 								所属なし
@@ -54,10 +54,10 @@
 						</dd>
 						<dt>設定</dt>
 						<dd>
-							<ul class="user-opt-list">
+							<ul class="user-list">
 								<li><a class="join-team" href="#">チームに参加する</a></li>
 								<li><a class="create-team" href="createTeam">チームを作る</a></li>
-								<li><a class="leave-team" href="leaveTeam">チーム離脱する</a></li>
+								<li><a class="leave-team" href="leaveTeam">チームから離脱する</a></li>
 								<li><a class="change-pw" href="#">パスワードを変更する</a></li>
 								<li><a class="withdraw" href="#">退会する</a></li>
 								<li><a href="/todo.login/logout">ログアウト</a></li>

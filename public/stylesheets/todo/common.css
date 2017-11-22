@@ -318,7 +318,7 @@ ul.buttons li a.delete-button:hover {
 }
 
 /* マイページ */
-ul.user-opt-list {
+ul.user-list {
 	list-style: none;
 	padding: 0;
 }
