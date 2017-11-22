@@ -2,9 +2,6 @@ $(function() {
 	function joinTeam() {
 
 	}
-	function cretateTeam() {
-
-	}
 	function leaveTeam() {
 
 	}
@@ -45,15 +42,13 @@ $(function() {
 		}
 	}
 
-	$('.join-team').on('click', function() {
+	$('.join-team').on('click', function(event) {
+		event.preventDefault();
 	});
-	$('.create-team').on('click', function() {
-
+	$('.leave-team').on('click', function(event) {
+		event.preventDefault();
 	});
-	$('.leave-team').on('click', function() {
-
-	});
-	$('.change-pw').on('click', function() {
+	$('.change-pw').on('click', function(event) {
 		event.preventDefault();
 		changePW();
 	});

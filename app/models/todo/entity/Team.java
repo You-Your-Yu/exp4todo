@@ -19,7 +19,7 @@ public class Team extends Model {
 	 */
 	public String name;
 
-	public Team(String tid, String pw, String name) {
+	public Team(String tid, String name) {
 		this.tid = tid;
 		this.name = name;
 	}

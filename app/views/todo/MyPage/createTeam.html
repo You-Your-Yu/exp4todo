@@ -5,8 +5,6 @@
 <title>todo</title>
 <link rel="stylesheet" href="/public/stylesheets/todo/normalize.css">
 <link rel="stylesheet" href="/public/stylesheets/todo/common.css">
-<script type="text/javascript" src="/public/javascripts/jquery-2.1.4.js"></script>
-<script type="text/javascript" src="/public/javascripts/todo/myPage.js"></script>
 </head>
 
 <body>
@@ -37,34 +35,19 @@
 			<div class="mypage">
 				<h2 class="content-title">マイページ</h2>
 				<div class="box">
-					<h3 class="task-name">ユーザー情報</h3>
-					<dl>
-						<dt>ユーザーID</dt>
-						<dd>${user.uid}</dd>
-						<dt>ニックネーム</dt>
-						<dd>${user.name}</dd>
-						<dt>所属チーム</dt>
-						<dd>
-							#{if user.tid != null}
-								${user.tid}
-							#{/if}
-							#{else}
-								所属なし
-							#{/else}
-						</dd>
-						<dt>設定</dt>
-						<dd>
-							<ul class="user-opt-list">
-								<li><a class="join-team" href="#">チームに参加する</a></li>
-								<li><a class="create-team" href="createTeam">チームを作る</a></li>
-								<li><a class="leave-team" href="#">チーム離脱する</a></li>
-								<li><a class="change-pw" href="#">パスワードを変更する</a></li>
-								<li><a class="withdraw" href="#">退会する</a></li>
-								<li><a href="/todo.login/logout">ログアウト</a></li>
-							</ul>
-						</dd>
-					</dl>
+					<h3 class="task-name">チームを作る</h3>
+					<form action="postCreateTeam">
+						<dl>
+							<dt>チームID(必須)</dt>
+							<dd><input type="text" name="tid" autofocus required></dd>
+							<dt>チーム名(必須)</dt>
+							<dd><input type="text" name="name" required></dd>
+						</dl>
+						<div class="submit"><input type="submit" class="submit-button" value="作成"></div>
+					</form>
 				</div>
+				<br>
+				<a href="index">戻る</a>
 			</div>
 		</div>
 		<div class="sidebar">

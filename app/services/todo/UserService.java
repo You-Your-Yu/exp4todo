@@ -33,9 +33,23 @@ public class UserService {
 		return User.delete("uid = ?1", uid);
 	}
 
+	/**
+	 * パスワードを変更する
+	 * @param user
+	 * @param newPW
+	 */
 	public static void changePW(User user, String newPW) {
 		String pw = DigestGenerator.getSHA256(newPW + user.uid + user.fixedSalt);
 		user.pw = pw;
+		user.save();
+	}
+	/**
+	 * チームを設定する
+	 * @param user
+	 * @param tid
+	 */
+	public static void setTeam(User user, String tid) {
+		user.tid = tid;
 		user.save();
 	}
 }
