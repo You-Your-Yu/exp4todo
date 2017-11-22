@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>todo</title>
+<link rel="stylesheet" href="/public/stylesheets/todo/normalize.css">
+<link rel="stylesheet" href="/public/stylesheets/todo/common.css">
+<script type="text/javascript" src="/public/javascripts/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="/public/javascripts/todo/myPage.js"></script>
+</head>
+
+<body>
+<header>
+	<div class="header-container">
+		<h1 id="site-title">todo</h1>
+		<p id="greeting">こんにちは、${user.name}さん。</p>
+	</div>
+</header>
+
+<nav>
+	<div class="nav-container">
+		<ul>
+			<li><a href="/todo.top/">HOME</a></li>
+			<li class="current"><a href="index">マイページ</a></li>
+			<li><a href="/todo.login/logout">ログアウト</a></li>
+		</ul>
+	</div>
+</nav>
+<main>
+	<div class="main-container">
+		<div class="maincol">
+			<div class="errmsg">
+			#{if flash.ERRMSG != null}
+				<p>${flash.ERRMSG}</p>
+			#{/if}
+			</div>
+			<div class="mypage">
+				<h2 class="content-title">マイページ</h2>
+				<div class="box">
+					<h3 class="task-name">ユーザー情報</h3>
+					<dl>
+						<dt>ユーザーID</dt>
+						<dd>${user.uid}</dd>
+						<dt>ニックネーム</dt>
+						<dd>${user.name}</dd>
+						<dt>所属チーム</dt>
+						<dd>
+							#{if user.tid = null}
+								${user.tid}
+							#{/if}
+							#{else}
+								所属なし
+							#{/else}
+						</dd>
+						<dt>設定</dt>
+						<dd>
+							<ul class="user-opt-list">
+								<li><a class="join-team" href="#">チームに参加する</a></li>
+								<li><a class="create-team" href="#">チームを作る</a></li>
+								<li><a class="leave-team" href="#">チーム離脱する</a></li>
+								<li><a class="change-pw" href="#">パスワードを変更する</a></li>
+								<li><a class="withdraw" href="#">退会する</a></li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<div class="sidebar">
+			サイドバー
+		</div>
+	</div>
+</main>
+
+<footer>
+	<div class="footer-container">
+	</div>
+</footer>
+</body>
+</html>

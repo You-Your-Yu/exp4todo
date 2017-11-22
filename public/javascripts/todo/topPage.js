@@ -23,10 +23,14 @@ $(function() {
 	$.when(function() {
 		var dfd = jQuery.Deferred();
 		// タスクデータの取得
-		$.get('getTaskData', function(data) {
+		$.get('getTaskData')
+		.done(function(data) {
 			taskData = data;
 			console.dir(taskData);
 			dfd.resolve();
+		})
+		.fail(function() {
+			alert('タスクの取得に失敗しました。');
 		});
 		return dfd.promise();
 	}()).done(function() {

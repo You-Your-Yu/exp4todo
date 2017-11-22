@@ -107,7 +107,7 @@ public class TaskService {
 		task.save();
 		return task;
 	}
-	
+
 	public static Task renameTask(Task task, String newName) {
 		task.name = newName;
 		task.save();
@@ -168,5 +168,9 @@ public class TaskService {
 			listTaskDto.add(initTaskDto(task));
 		}
 		return listTaskDto;
+	}
+
+	public static int deleteTaskByClientUid(String uid) {
+		return Task.delete("clientUid = ?1", uid);
 	}
 }

@@ -1,6 +1,7 @@
 package services.todo;
 
 import models.todo.entity.User;
+import sample.DigestGenerator;
 
 public class UserService {
 	/**
@@ -22,5 +23,19 @@ public class UserService {
 		User user = new User(uid, pw, name);
 		user.save();
 		return user;
+	}
+	/**
+	 * 指定uidをもつUserを削除する
+	 * @param uid
+	 * @return
+	 */
+	public static int deleteUserByUid(String uid) {
+		return User.delete("uid = ?1", uid);
+	}
+
+	public static void changePW(User user, String newPW) {
+		String pw = DigestGenerator.getSHA256(newPW + user.uid + user.fixedSalt);
+		user.pw = pw;
+		user.save();
 	}
 }

@@ -1,9 +1,12 @@
 $(function() {
 		var now = new Date();
-		var year = now.getFullYear();
-		var month = now.getMonth() + 1;
-		var day = now.getDate();
-		var hour = now.getHours();
-		var formatedNow = year + '-' + month + '-' + day + 'T' + hour +':00:00';
-		$('.datetime-local').attr('value', formatedNow);
+		var format = 'yyyy-MM-ddTHH:mm:00';
+		var format = format.replace(/yyyy/g, now.getFullYear());
+		// 0詰めを行うため、左に0連結し、後ろ2文字をsliceする
+		var format = format.replace(/MM/, ('0' + (now.getMonth()+1)).slice(-2));
+		var format = format.replace(/dd/, ('0' + now.getDate()).slice(-2));
+		var format = format.replace(/HH/, ('0' + now.getHours()).slice(-2));
+		var format = format.replace(/mm/, ('0' + now.getMinutes()).slice(-2));
+
+		$('.datetime-local').attr('value', format);
 });

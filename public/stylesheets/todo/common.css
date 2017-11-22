@@ -316,3 +316,9 @@ ul.buttons li a.delete-button:hover {
 .box input[type="password"] {
 	width: 100%;
 }
+
+/* マイページ */
+ul.user-opt-list {
+	list-style: none;
+	padding: 0;
+}
