@@ -53,20 +53,6 @@ public class Login extends Controller {
 			flash.put(Consts.ERRMSG, "既に存在するユーザーIDです。ユーザーID: " + uid);
 			registerUser();
 		}
-		// ユーザーIDに空の文字列を禁止
-		if(uid == null || uid.isEmpty()) {
-			flash.put(Consts.ERRMSG, "空の文字列をユーザーIDとして登録することはできません。");
-			registerUser();
-		}
-		// パスワードには空文字を許可
-		if(pw == null || pw.isEmpty()) {
-			pw = "";
-		}
-		// 名前に空のの文字列を禁止
-		if(name == null || name.isEmpty()) {
-			flash.put(Consts.ERRMSG, "空の文字列をニックネームとして登録することはできません。");
-			registerUser();
-		}
 		// ユーザー登録処理
 		UserService.regisgerUser(uid, pw, name);
 		// ログイン処理
