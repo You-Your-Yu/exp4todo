@@ -1,6 +1,42 @@
 $(function() {
 	function joinTeam() {
+		var tid = prompt('チームIDを入力してください。');
+		if(tid) {
+			$.ajax({
+			    //設定
+			    url  : 'findTeam',
+			    type : "POST",
+			    data : {'tid': tid},
 
+			    //ajax通信エラー
+			    error : function(XMLHttpRequest, textStatus, errorThrown) {
+			        console.log('ajax通信に失敗しました');
+			        console.log('XMLHttpRequest : ' + XMLHttpRequest.status);
+			        console.log('textStatus     : ' + textStatus);
+			        console.log('errorThrown    : ' + errorThrown.message);
+			        alert('ajax通信に失敗しました');
+			    },
+			    //ajax通信成功
+			    success : function(response) {
+			        console.log('findTeam');
+			        if(response.result) {
+			        		var msg = '次のチームが見つかりました。参加しますか？\n'
+			        			+ 'チームID: ' + response.tid + '\n'
+			        			+ 'チーム名: ' + response.name;
+			        		var conf = confirm(msg);
+			        		if(conf) {
+			        			$.post('joinTeam', {'tid': response.tid})
+			        			.done(function() {
+			        				alert('参加しました。')
+			        			});
+			        		}
+			        }
+			        else {
+			        		alert('チームが見つかりませんでした。')
+			        }
+			    }
+		    });
+		}
 	}
 	function leaveTeam() {
 
@@ -22,6 +58,7 @@ $(function() {
 				        console.log('XMLHttpRequest : ' + XMLHttpRequest.status);
 				        console.log('textStatus     : ' + textStatus);
 				        console.log('errorThrown    : ' + errorThrown.message);
+				        alsert('ajax通信に失敗しました');
 				    },
 				    //ajax通信成功
 				    success : function(response) {
@@ -44,6 +81,7 @@ $(function() {
 
 	$('.join-team').on('click', function(event) {
 		event.preventDefault();
+		joinTeam();
 	});
 	$('.leave-team').on('click', function(event) {
 		event.preventDefault();

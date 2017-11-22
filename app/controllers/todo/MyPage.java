@@ -24,6 +24,9 @@ public class MyPage extends Controller {
 		render(user);
 	}
 
+	/**
+	 * チーム作成画面へ遷移
+	 */
 	public static void createTeam() {
 		String uid = session.get(Consts.LOGIN);
 		User user = UserService.findUserByUid(uid);
@@ -34,7 +37,9 @@ public class MyPage extends Controller {
 
 		render(user);
 	}
-
+	/**
+	 * チームを作成する
+	 */
 	public static void postCreateTeam() {
 		String uid = session.get(Consts.LOGIN);
 		User user = UserService.findUserByUid(uid);
@@ -56,16 +61,57 @@ public class MyPage extends Controller {
 
 		index();
 	}
+	/**
+	 * チームを検索し結果を返す
+	 */
+	public static void findTeam() {
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
+		String ret;
+		String tid = params.get("tid");
+		Team team = TeamService.findByTid(tid);
+		if(team == null) {
+			ret = "{\"result\": false}";
+		}
+		else {
+			ret ="{\"result\": true, \"tid\": \"" + team.tid + "\", \"name\": \"" + team.name + "\"}";
+			System.out.println(" >>> " + ret);
+		}
+		renderJSON(ret);
+	}
+	/**
+	 * チーム参加
+	 */
+	public static void joinTeam() {
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
+		String tid = params.get("tid");
+		UserService.setTeam(user, tid);
+		index();
+	}
 
 	/**
 	 * パスワードを変更する
 	 */
 	public static void changePW() {
+
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
 		String ret;
 		String currentPW = params.get("currentPW");
 		String newPW = params.get("newPW");
-		String uid = session.get(Consts.LOGIN);
-		User user = UserService.findUserByUid(uid);
 		String pw = DigestGenerator.getSHA256(currentPW + uid + user.fixedSalt);
 		if(!pw.equals(user.pw)) {
 			ret = "{\"msg\": \"パスワードが間違っています。\"}";
@@ -82,7 +128,11 @@ public class MyPage extends Controller {
 	 */
 	public static void withdraw() {
 		String uid = session.get(Consts.LOGIN);
-		TaskService.deleteTaskByClientUid(uid);
+		User user = UserService.findUserByUid(uid);
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}		TaskService.deleteTaskByClientUid(uid);
 		UserService.deleteUserByUid(uid);
 		session.remove(Consts.LOGIN);
 		Login.index();
