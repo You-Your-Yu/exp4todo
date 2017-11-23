@@ -27,7 +27,7 @@ $(function() {
 			        		if(conf) {
 			        			$.post('joinTeam', {'tid': response.tid})
 			        			.done(function() {
-			        				$('.team').text(response.name);
+			        				$('.team').text(response.name+'(ID: ' + response.tid +')');
 			        				alert('参加しました。')
 			        			});
 			        		}

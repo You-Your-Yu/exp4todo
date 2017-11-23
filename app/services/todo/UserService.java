@@ -1,5 +1,7 @@
 package services.todo;
 
+import models.todo.dto.UserDto;
+import models.todo.entity.Team;
 import models.todo.entity.User;
 import sample.DigestGenerator;
 
@@ -53,8 +55,31 @@ public class UserService {
 		user.save();
 	}
 
+	/**
+	 * チームを離脱する
+	 * @param user
+	 */
 	public static void leaveTeam(User user) {
 		user.tid = null;
 		user.save();
+	}
+
+	/**
+	 * userから画面表示用オブジェクトUserDtoを設定する
+	 * @param user
+	 * @return
+	 */
+	public static UserDto initUserDto(User user) {
+		UserDto userDto = new UserDto();
+		userDto.uid = user.uid;
+		userDto.name = user.name;
+		String tid = user.tid;
+		Team team = TeamService.findByTid(tid);
+		if(team != null) {
+			userDto.tid = team.tid;
+			userDto.teamName = team.name;
+		}
+
+		return userDto;
 	}
 }

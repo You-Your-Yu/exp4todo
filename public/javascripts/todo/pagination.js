@@ -27,11 +27,10 @@ $.fn.pagination = function(config) {
 
 	// 値取得
 	var totalItemNum = $element.length;
-	console.log('totalItemNum = ' + totalItemNum);
 	var totalPageNum = Math.ceil(totalItemNum / o.viewNum);
 	var ellipsisFlag = false;
 
-	console.log($element.length);
+	console.log(' >>> pagination: $element.length = ' + $element.length);
 
 	// 変数設定
 	var currentIndex = 0;

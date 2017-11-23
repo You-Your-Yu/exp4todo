@@ -162,6 +162,12 @@ ul.filter-btn li.completed a {
 ul.filter-btn li.all a {
 	background: #87B62E;
 }
+ul.filter-btn li.private a {
+	background: #6A5ACD;
+}
+ul.filter-btn li.public a {
+	background: #FFA500;
+}
 ul.filter-btn li.off a {
 	background: #AAAAAA;
 }

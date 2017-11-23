@@ -1,6 +1,7 @@
 package controllers.todo;
 
 import models.todo.consts.Consts;
+import models.todo.dto.UserDto;
 import models.todo.entity.Team;
 import models.todo.entity.User;
 import play.mvc.Controller;
@@ -20,8 +21,8 @@ public class MyPage extends Controller {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
-
-		render(user);
+		UserDto userDto = UserService.initUserDto(user);
+		render(user, userDto);
 	}
 
 	/**

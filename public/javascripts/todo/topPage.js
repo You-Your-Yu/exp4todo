@@ -26,6 +26,7 @@ $(function() {
 		$.get('getTaskData')
 		.done(function(data) {
 			taskData = data;
+			console.log(' >>> topPage: taskData');
 			console.dir(taskData);
 			dfd.resolve();
 		})
@@ -51,17 +52,18 @@ $(function() {
 				var li = $(this).parent();
 				// ボタンのON/OFFを変更
 				if(li.hasClass('on')) {
-					console.log('on -> off');
 					li
 					.removeClass('on')
 					.addClass('off');
+					li.enableOtherFilter();
 				}
 				else {
-					console.log('off -> on');
 					li
 					.removeClass('off')
 					.addClass('on');
+					li.disableOtherFilter();
 				}
+
 				// タスクテーブルの再描画
 				renderTaskTable(filterData(taskData, getValidFilterNames()));
 				// ページネーション

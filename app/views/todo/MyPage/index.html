@@ -41,13 +41,13 @@
 					<h3 class="task-name">ユーザー情報</h3>
 					<dl>
 						<dt>ユーザーID</dt>
-						<dd>${user.uid}</dd>
+						<dd>${userDto.uid}</dd>
 						<dt>ニックネーム</dt>
-						<dd>${user.name}</dd>
+						<dd>${userDto.name}</dd>
 						<dt>所属チーム</dt>
-						<dd>
-							#{if user.tid != null}
-								<a href="#" class="team">${user.tid} (ID: ${user.tid})</a>
+						<dd class="team">
+							#{if userDto.tid != null}
+								${userDto.teamName} (ID: ${userDto.tid})
 							#{/if}
 							#{else}
 								所属なし

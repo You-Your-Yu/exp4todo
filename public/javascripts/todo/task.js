@@ -3,7 +3,9 @@ var taskData;
 // 定数
 const COMPLETED = '完了済み';
 const INCOMPLETED = '未完了';
-//ページネーションのオプション
+const PRIVATE = '公開しない';
+const PUBLIC = '公開する';
+// ページネーションのオプション
 var opt;
 /*
  * タスクテーブルの描画
@@ -151,46 +153,6 @@ function delteTaskWithoutST(taskId) {
 		$('.pagination-data').pagination(opt);
 	}
 }
-
-function filterData(data, filterNames) {
-	console.dir(data);
-	var newData = new Set();
-	$(filterNames).each(function() {
-		var filterName = this.toString();
-		switch(filterName) {
-		case 'all':
-			console.log('case all:');
-			$(data).each(function() {
-				var currentData = this;
-				newData.add(currentData);
-			});
-			break;
-		case 'incompleted':
-			console.log('case incompleted:');
-			$(data).each(function() {
-				var currentData = this;
-				if(currentData.taskState == INCOMPLETED) {
-					newData.add(currentData);
-				}
-			});
-			break;
-		case 'completed':
-			console.log('case completed:');
-			$(data).each(function() {
-				var currentData = this;
-				if(currentData.taskState == COMPLETED) {
-					newData.add(currentData);
-				}
-			});
-			break;
-		default:
-			console.log('default');
-			break;
-		}
-	});
-	console.dir(newData);
-	return Array.from(newData);
-}
 /*
  * 有効なフィルタ名の配列を取得する
  */
@@ -202,6 +164,143 @@ function getValidFilterNames() {
 			ret.push($($child).attr('id'));
 		}
 	});
+	console.log(' >>> getValidFilterNames: ret');
 	console.dir(ret);
 	return ret;
+}
+/*
+ * フィルター情報に応じてデータをフィルタリングする
+ */
+function filterData(data, filterNames) {
+	console.log(' >>> filterData: data');
+	console.dir(data);
+	var newData = [];
+	var filterName = this.toString();
+	var allFlag = false;
+	var completedFlag = false;
+	var incompletedFlag = false;
+	var privateFlag = false;
+	var publicFlag = false;
+	for(var i = 0; i < filterNames.length; i++) {
+		switch(filterNames[i]) {
+		case 'all':
+			allFlag = true;
+			break;
+		case 'incompleted':
+			incompletedFlag = true;
+			break;
+		case 'completed':
+			completedFlag = true;
+			break;
+		case 'private':
+			privateFlag = true;
+			break;
+		case 'public':
+			publicFlag = true;
+			break;
+		default:
+			console.log('Error: Invalid filter name');
+		}
+	}
+	for(var i = 0; i < data.length; i++) {
+		var tempFlag1 = false;
+		var tempFlag2 = false;
+		if(allFlag) {
+			newData.push(data[i]);
+			continue;
+		}
+		// 未完了のタスクに該当
+		if(incompletedFlag && data[i].taskState == INCOMPLETED) tempFlag1 = true;
+		// 完了済みのタスクに該当
+		if(completedFlag && data[i].taskState == COMPLETED) tempFlag1 = true;
+		// 条件を満たさない場合
+		if(!tempFlag1) continue;
+
+		// 個人のタスクに該当
+		if(privateFlag && data[i].taskType == PRIVATE) tempFlag2 = true;
+		// チームのタスクに該当
+		if(publicFlag && data[i].taskType == PUBLIC) tempFlag2 = true;
+		// 条件を満たさない場合
+		if(!tempFlag2) continue;
+
+		// 条件を満たす場合
+		newData.push(data[i]);
+	}
+	return newData;
+}
+/*
+ * 連動するフィルターをONにする
+ */
+$.fn.enableOtherFilter = function() {
+	var li = $(this);
+	if(li.hasClass('all')) {
+		li.siblings().each(function() {
+			$this = $(this);
+			if($this.hasClass('before')) {
+				$this.addClass('on')
+				.removeClass('off')
+				.removeClass('before');
+			}
+		});
+	}
+	else if(li.hasClass('incompleted')){
+		li.parent().find('.completed')
+		.addClass('on')
+		.removeClass('off');
+	}
+	else if(li.hasClass('completed')){
+		li.parent().find('.incompleted')
+		.addClass('on')
+		.removeClass('off');
+	}
+	else if(li.hasClass('private')){
+		li.parent().find('.public')
+		.addClass('on')
+		.removeClass('off');
+	}
+	else if(li.hasClass('public')){
+		li.parent().find('.private')
+		.addClass('on')
+		.removeClass('off');
+	}
+	else {
+		console.log('Error: Unexpected case');
+	}
+	li.parent().children().removeClass('before');
+}
+/*
+ * 連動するフィルターをOFFにする
+ */
+$.fn.disableOtherFilter = function() {
+	var li = $(this);
+	if(li.hasClass('all')) {
+		li.siblings().each(function() {
+			$this = $(this);
+			if($this.hasClass('on')) {
+				$this.addClass('before')
+				.addClass('off')
+				.removeClass('on');
+			}
+		});
+	}
+	else if(li.hasClass('incompleted')){
+		li.parent().find('.completed')
+		.removeClass('on')
+		.addClass('off');
+	}
+	else if(li.hasClass('completed')){
+		li.parent().find('.incompleted')
+		.removeClass('on')
+		.addClass('off');
+	}
+	else if(li.hasClass('private')){
+		li.parent().find('.public')
+		.removeClass('on')
+		.addClass('off');
+	}
+	else if(li.hasClass('public')){
+		li.parent().find('.private')
+		.removeClass('on')
+		.addClass('off');
+	}
 }
