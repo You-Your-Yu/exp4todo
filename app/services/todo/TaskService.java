@@ -173,4 +173,11 @@ public class TaskService {
 	public static int deleteTaskByClientUid(String uid) {
 		return Task.delete("clientUid = ?1", uid);
 	}
+	
+	public static boolean hasAuthority(User user, Task task) {
+		if(!task.tid.equals(user.tid)  && !task.clientUid.equals(user.uid)) {
+			return false;
+		}
+		return true;
+	}
 }

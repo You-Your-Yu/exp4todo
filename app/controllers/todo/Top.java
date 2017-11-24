@@ -77,10 +77,13 @@ public class Top extends Controller {
 	public static void taskDetail() {
 		String uid = session.get(Consts.LOGIN);
 		User user = UserService.findUserByUid(uid);
+		// ログインチェック
 		if(user == null) {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
+		// 権限のチェック
+		
 		Task task = TaskService.findTaskById(Long.parseLong(params.get("taskId")));
 		TaskDto taskDto = TaskService.initTaskDto(task);
 		render(user, taskDto);
@@ -155,34 +158,105 @@ public class Top extends Controller {
 	 * 画面遷移なしにタスクを完了する
 	 */
 	public static void completeTaskWithoutST() {
-		Long taskId = Long.parseLong(params.get("taskId"));
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		// ログインチェック
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
+		Long taskId = null;
+		try {
+			taskId = Long.parseLong(params.get("taskId"));
+		}catch (Exception e) {
+			forbidden();
+		}
 		Task task = TaskService.findTaskById(taskId);
+		// 権限のチェック
+		if(!TaskService.hasAuthority(user, task)) {
+			forbidden();
+		}
+		
 		TaskService.completeTask(task);
 	}
 	/**
 	 * 画面遷移なしにタスクの完了を取り消す
 	 */
 	public static void incompleteTaskWithoutST() {
-		Long taskId = Long.parseLong(params.get("taskId"));
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		// ログインチェック
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
+		Long taskId = null;
+		// taskIdのパース
+		try{
+			taskId = Long.parseLong(params.get("taskId"));
+		}catch (Exception e) {
+			forbidden();
+		}
 		Task task = TaskService.findTaskById(taskId);
+		// 権限のチェック
+		if(!TaskService.hasAuthority(user, task)) {
+			forbidden();
+		}
+
 		TaskService.incompleteTask(task);
 	}
 	/**
 	 * 画面遷移なしにタスク名を編集する
 	 */
 	public static void renameTaskWithoutST() {
-		Long taskId = Long.parseLong(params.get("taskId"));
-		String newName = params.get("newName");
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		// ログインチェック
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
+		Long taskId = null;
+		// タスクIDのパース
+		try {
+		 	taskId = Long.parseLong(params.get("taskId"));
+		} catch (Exception e) {
+			forbidden();
+		}
 		Task task = TaskService.findTaskById(taskId);
+		// 権限のチェック
+		if(!TaskService.hasAuthority(user, task)) {
+			forbidden();
+		}
+		String newName = params.get("newName");
+		
 		TaskService.renameTask(task, newName);
 	}
 	/**
 	 * 画面遷移なしにタスクを削除する
 	 */
 	public static void deleteTaskWithoutST() {
-		Long taskId = Long.parseLong(params.get("taskId"));
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		// ログインチェック
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
+		Long taskId = null;
+		// タスクIDのパース
+		try {
+			taskId = Long.parseLong(params.get("taskId"));
+		}catch (Exception e) {
+			forbidden();
+		}
 		Task task = TaskService.findTaskById(taskId);
+		// 権限のチェック
+		if(!TaskService.hasAuthority(user, task)) {
+			forbidden();
+		}
+		
 		TaskService.deleteTask(task);
 	}
-
+	
 }
