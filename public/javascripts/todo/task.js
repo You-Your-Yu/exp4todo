@@ -153,6 +153,8 @@ function delteTaskWithoutST(taskId) {
 		$('.pagination-data').pagination(opt);
 	}
 }
+function registerTaskWithoutST() {
+}
 /*
  * 有効なフィルタ名の配列を取得する
  */
