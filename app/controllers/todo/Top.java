@@ -52,12 +52,17 @@ public class Top extends Controller {
 	 * タスクの登録を行う
 	 */
 	public static void postRegisterTask() {
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		// ログインチェック
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
 		try {
-			String uid = session.get(Consts.LOGIN);
-			User client = UserService.findUserByUid(uid);
-			String clientUid = client.uid;
+			String clientUid = uid;
 			String picUid = null;
-			String tid = client.tid;
+			String tid = user.tid;
 			String name = params.get("name");
 			String description = params.get("description");
 			TaskType taskType = TaskType.valueOf(params.get("taskType"));
@@ -82,9 +87,11 @@ public class Top extends Controller {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
-		// 権限のチェック
-		
 		Task task = TaskService.findTaskById(Long.parseLong(params.get("taskId")));
+		// 権限のチェック
+		if(!TaskService.hasAuthority(user, task)) {
+			forbidden();
+		}
 		TaskDto taskDto = TaskService.initTaskDto(task);
 		render(user, taskDto);
 	}
@@ -135,6 +142,13 @@ public class Top extends Controller {
 	 * タスクを編集する
 	 */
 	public static void postUpdateTask() {
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		// ログインチェック
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
 		try {
 			String picUid = null;
 			String name = params.get("name");
@@ -146,10 +160,14 @@ public class Top extends Controller {
 			if(task == null) {
 				throw new Exception("タスクが見つかりません。");
 			}
+			// 権限のチェック
+			if(!TaskService.hasAuthority(user, task)) {
+				forbidden();
+			}
+			
 			TaskService.updateTask(task, name, description, picUid, taskType, limitTime);
 		} catch (Exception e) {
-			flash.put(Consts.ERRMSG, "内部エラー： コンソールを確認してください。");
-			e.printStackTrace();
+			forbidden();
 		}
 		index();
 	}
