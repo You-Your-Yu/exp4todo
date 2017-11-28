@@ -27,10 +27,6 @@ public class Task extends Model {
 	 */
 	public String clientUid;
 	/**
-	 * 担当者(person in charge)のuid
-	 */
-	public String picUid;
-	/**
 	 * タスクの種類
 	 */
 	public TaskType taskType;
@@ -57,11 +53,10 @@ public class Task extends Model {
 	 * @param client
 	 * @param taskType
 	 */
-	public Task(String name, String description, String tid, String clientUid, String picUid, TaskType taskType, Timestamp limitTime) {
+	public Task(String name, String description, String tid, String clientUid, TaskType taskType, Timestamp limitTime) {
 		this.name = name;
 		this.description = description;
 		this.clientUid = clientUid;
-		this.picUid = picUid;
 		this.taskType = taskType;
 		if(taskType == TaskType.PUBLIC) {
 			this.tid = tid;

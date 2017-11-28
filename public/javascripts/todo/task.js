@@ -35,7 +35,6 @@ function renderTaskTable(data) {
 		.append($hidden)
 		.append($taskNameAnchor);
 		var $taskName = $('<td></td>').append($form);
-		var $picName = $('<td></td>').text(task.picName);
 		var $taskState = $('<td></td>').text(task.taskState);
 		var $limitTime = $('<td></td>').text(task.limitTime);
 		var $btns = createBtns(task);
@@ -43,7 +42,6 @@ function renderTaskTable(data) {
 		$('<tr></tr>')
 		.addClass('pagination-data')
 		.append($taskName)
-		.append($picName)
 		.append($taskState)
 		.append($limitTime)
 		.append($btns)

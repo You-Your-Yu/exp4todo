@@ -57,8 +57,8 @@ public class TaskService {
 	 * @param limitTime
 	 * @return
 	 */
-	public static Task registerTask(String name, String description, String tid, String clientUid, String picUid, TaskType taskType, Timestamp limitTime) {
-		Task task = new Task(name, description, tid, clientUid, picUid, taskType, limitTime);
+	public static Task registerTask(String name, String description, String tid, String clientUid, TaskType taskType, Timestamp limitTime) {
+		Task task = new Task(name, description, tid, clientUid, taskType, limitTime);
 		task.save();
 		return task;
 	}
@@ -100,11 +100,10 @@ public class TaskService {
 	 * @param limitTime
 	 * @return
 	 */
-	public static Task updateTask(Task task, String name, String description, String picUid,
+	public static Task updateTask(Task task, String name, String description,
 			TaskType taskType, String tid, Timestamp limitTime) {
 		task.name = name;
 		task.description = description;
-		task.picUid = picUid;
 		task.taskType = taskType;
 		if(taskType == TaskType.PUBLIC) {
 			task.tid = tid;
@@ -141,15 +140,6 @@ public class TaskService {
 		else {
 			taskDto.clientName = Consts.NONE;
 			taskDto.clientUid = Consts.NONE;
-		}
-		User pic = UserService.findUserByUid(task.picUid);
-		if(pic != null) {
-			taskDto.picName = pic.name;
-			taskDto.clientName = pic.uid;
-		}
-		else {
-			taskDto.picName = Consts.UNDECIDED;
-			taskDto.picUid = Consts.UNDECIDED;
 		}
 		taskDto.description = task.description;
 		taskDto.limitTime = new SimpleDateFormat("yyyy年MM月dd日(E) HH時mm分", Locale.JAPAN).format(task.limitTime);

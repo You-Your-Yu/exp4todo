@@ -23,14 +23,6 @@ public class TaskDto {
 	 */
 	public String clientUid;
 	/**
-	 * 担当者Userのname
-	 */
-	public String picName;
-	/**
-	 * 担当者Userのuid
-	 */
-	public String picUid;
-	/**
 	 * タスクの説明
 	 */
 	public String description;

@@ -75,7 +75,6 @@ public class Top extends Controller {
 		// パースのチェック
 		try {
 			String clientUid = uid;
-			String picUid = null;
 			String tid = user.tid;
 			String name = params.get("name");
 			String description = params.get("description");
@@ -89,7 +88,7 @@ public class Top extends Controller {
 			}
 			Timestamp limitTime = new Timestamp(new SimpleDateFormat("yyyy-MM-dd HH:mm")
 					.parse(params.get("limitTime").replaceAll("T", " ")).getTime());
-			TaskService.registerTask(name, description, tid, clientUid, picUid, taskType, limitTime);
+			TaskService.registerTask(name, description, tid, clientUid, taskType, limitTime);
 		} catch (Exception e) {
 			forbidden();
 		}
@@ -239,7 +238,6 @@ public class Top extends Controller {
 		}
 		// パースのチェック
 		try {
-			String picUid = null;
 			String name = params.get("name");
 			String description = params.get("description");
 			TaskType taskType = TaskType.valueOf(params.get("taskType"));
@@ -253,7 +251,7 @@ public class Top extends Controller {
 			if(!TaskService.hasAuthority(user, task)) {
 				forbidden();
 			}
-			TaskService.updateTask(task, name, description, picUid, taskType, user.tid, limitTime);
+			TaskService.updateTask(task, name, description, taskType, user.tid, limitTime);
 		} catch (Exception e) {
 			forbidden();
 		}
