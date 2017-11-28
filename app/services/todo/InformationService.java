@@ -11,8 +11,8 @@ public class InformationService {
 	 * @param tid
 	 * @return
 	 */
-	public static List<Information> findListInformationByTidLimitN(String tid, int n) {
-		return Information.find("tid = ?1 ORDERBY registTime DESC", tid).fetch(n);
+	public static List<Information> findListInformationByUidOrTidLimitN(String uid, String tid, int n) {
+		return Information.find("uid = ?1 OR tid = ?2 ORDER BY registerTime DESC", uid, tid).fetch(n);
 	}
 
 	/**

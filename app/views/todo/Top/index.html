@@ -61,13 +61,21 @@
 						<!-- ajaxでテーブルを生成 -->
 				</table>
 				<div class="pager"></div>
-				<form action="registerTask" method="post">
-					<p><input type="submit" value="タスク登録" autofocus/></p>
-				</form>
+				<a class="register-task-btn" href="registerTask">タスク登録</a>
 			</div>
 		</div>
 		<div class="sidebar">
-			サイドバー
+			<p class="sidebar-title">お知らせ</p>
+			<ul class="list-information">
+				#{list items:listInformation, as :'e'}
+					<li>
+						<div class="information-node">
+							<span class="info-register-time">${e.formatedRegisterTime}</span><br>
+							<span class="info-description">${e.description}</span>
+						</div>
+					</li>
+				#{/list}
+			</ul>
 		</div>
 	</div>
 </main>

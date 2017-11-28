@@ -1,4 +1,4 @@
-$.fn.pagination = function(config) {
+function pagination(config) {
 
 	// オプション
 	var o = $.extend({
@@ -18,7 +18,7 @@ $.fn.pagination = function(config) {
 	}, config);
 
 	// セレクタ
-	var $element = $(this);
+	var $element = $('.pagination-data');
 	var $pager = o.pager;
 	if(o.ellipsis) {
 		var $ellipsisFirst = $('<span class="ellipsis"/>').text(o.ellipsisText);

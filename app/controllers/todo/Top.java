@@ -7,10 +7,14 @@ import java.util.List;
 import models.todo.consts.Consts;
 import models.todo.consts.TaskType;
 import models.todo.dto.TaskDto;
+import models.todo.entity.Information;
 import models.todo.entity.Task;
+import models.todo.entity.Team;
 import models.todo.entity.User;
 import play.mvc.Controller;
+import services.todo.InformationService;
 import services.todo.TaskService;
+import services.todo.TeamService;
 import services.todo.UserService;
 
 public class Top extends Controller {
@@ -26,8 +30,8 @@ public class Top extends Controller {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
-
-		render(user);
+		List<Information> listInformation = InformationService.findListInformationByUidOrTidLimitN(uid, user.tid, 10);
+		render(user, listInformation);
 	}
 
 	/*
@@ -89,7 +93,14 @@ public class Top extends Controller {
 			Timestamp limitTime = new Timestamp(new SimpleDateFormat("yyyy-MM-dd HH:mm")
 					.parse(params.get("limitTime").replaceAll("T", " ")).getTime());
 			TaskService.registerTask(name, description, tid, clientUid, taskType, limitTime);
+			Team team = TeamService.findByTid(tid);
+			String teamName = null;
+			if(team != null) {
+				teamName = team.name;
+			}
+			InformationService.registerInformation(clientUid, user.name, tid, teamName, "タスク登録", user.name + "さんが「" + name + "」を登録しました。");
 		} catch (Exception e) {
+			e.printStackTrace();
 			forbidden();
 		}
 		index();

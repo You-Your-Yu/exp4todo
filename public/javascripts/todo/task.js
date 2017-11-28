@@ -94,7 +94,7 @@ function completeTaskWithoutST(taskId) {
 	// タスクテーブルの再描画
 	renderTaskTable(filterData(taskData, getValidFilterNames()));
 	// ページネーション
-	$('.pagination-data').pagination(opt);
+	pagination(opt);
 }
 /* 画面遷移なしにタスクの完了を取り消す */
 function incompleteTaskWithoutST(taskId) {
@@ -110,7 +110,7 @@ function incompleteTaskWithoutST(taskId) {
 	// タスクテーブルの再描画
 	renderTaskTable(filterData(taskData, getValidFilterNames()));
 	// ページネーション
-	$('.pagination-data').pagination(opt);
+	pagination(opt);
 }
 /* 画面遷移なしにタスク名を変更する */
 function renameTaskWithoutST(taskId) {
@@ -128,7 +128,7 @@ function renameTaskWithoutST(taskId) {
 		// タスクテーブルの再描画
 		renderTaskTable(filterData(taskData, getValidFilterNames()));
 		// ページネーション
-		$('.pagination-data').pagination(opt);
+		pagination(opt);
 	}
 }
 /* 画面遷移なしにタスクを削除する */
@@ -148,11 +148,10 @@ function delteTaskWithoutST(taskId) {
 		// タスクテーブルの再描画
 		renderTaskTable(filterData(taskData, getValidFilterNames()));
 		// ページネーション
-		$('.pagination-data').pagination(opt);
+		pagination(opt);
 	}
 }
-function registerTaskWithoutST() {
-}
+
 /*
  * 有効なフィルタ名の配列を取得する
  */

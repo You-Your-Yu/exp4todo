@@ -44,7 +44,8 @@ $(function() {
 			return dfd.promise();
 		}()).done(function() {
 			// ページネーション
-			$('.pagination-data').pagination(opt);
+			console.log('topPage: pagination');
+			pagination(opt);
 
 			// フィルターボタン
 			$('.filter-btn').on('click', 'li > a', function(event) {
@@ -67,7 +68,7 @@ $(function() {
 				// タスクテーブルの再描画
 				renderTaskTable(filterData(taskData, getValidFilterNames()));
 				// ページネーション
-				$('.pagination-data').pagination(opt);
+				pagination(opt);
 			});
 		});
 	});
