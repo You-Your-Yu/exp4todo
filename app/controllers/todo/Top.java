@@ -21,6 +21,7 @@ public class Top extends Controller {
 	public static void index() {
 		String uid = session.get(Consts.LOGIN);
 		User user = UserService.findUserByUid(uid);
+		// ログインチェック
 		if(user == null) {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
@@ -34,6 +35,11 @@ public class Top extends Controller {
 	 */
 	public static void getTaskData() {
 		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		// ログインチェック
+		if(user == null) {
+			forbidden();
+		}
 		List<Task> listTask = TaskService.findListTaskByUid(uid);
 		List<TaskDto> listTaskDto = TaskService.initListTaskDto(listTask);
 		renderJSON(listTaskDto);
@@ -45,6 +51,11 @@ public class Top extends Controller {
 	public static void registerTask() {
 		String uid = session.get(Consts.LOGIN);
 		User user = UserService.findUserByUid(uid);
+		// ログインチェック
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
 		render(user);
 	}
 
@@ -59,6 +70,7 @@ public class Top extends Controller {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
+		// パースのチェック
 		try {
 			String clientUid = uid;
 			String picUid = null;
@@ -70,10 +82,8 @@ public class Top extends Controller {
 					.parse(params.get("limitTime").replaceAll("T", " ")).getTime());
 			TaskService.registerTask(name, description, tid, clientUid, picUid, taskType, limitTime);
 		} catch (Exception e) {
-			flash.put(Consts.ERRMSG, "内部エラー: コンソールを確認してください。");
-			e.printStackTrace();
+			forbidden();
 		}
-
 		index();
 	}
 	/**
@@ -100,7 +110,25 @@ public class Top extends Controller {
 	 * タスクを完了する
 	 */
 	public static void completeTask() {
-		Task task = TaskService.findTaskById(Long.parseLong(params.get("taskId")));
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		// ログインチェック
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
+		Long taskId = null;
+		// パースのチェック
+		try {
+			taskId = Long.parseLong(params.get("taskId"));
+		}catch (Exception e) {
+			forbidden();
+		}
+		Task task = TaskService.findTaskById(taskId);
+		// 権限のチェック
+		if(!TaskService.hasAuthority(user, task)) {
+			forbidden();
+		}
 		TaskService.completeTask(task);
 		index();
 	}
@@ -109,8 +137,27 @@ public class Top extends Controller {
 	 * タスクの完了を取り消す
 	 */
 	public static void incompleteTask() {
-		Task task = TaskService.findTaskById(Long.parseLong(params.get("taskId")));
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		// ログインチェック
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
+		Long taskId = null;
+		// パースのチェック
+		try {
+			taskId = Long.parseLong(params.get("taskId"));
+		}catch (Exception e) {
+			forbidden();
+		}
+		Task task = TaskService.findTaskById(taskId);
+		// 権限のチェック
+		if(!TaskService.hasAuthority(user, task)) {
+			forbidden();
+		}
 		TaskService.incompleteTask(task);
+
 		index();
 	}
 
@@ -118,8 +165,27 @@ public class Top extends Controller {
 	 * タスクを削除する
 	 */
 	public static void deleteTask() {
-		Task task = TaskService.findTaskById(Long.parseLong(params.get("taskId")));
+		String uid = session.get(Consts.LOGIN);
+		User user = UserService.findUserByUid(uid);
+		// ログインチェック
+		if(user == null) {
+			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
+			Login.index();
+		}
+		Long taskId = null;
+		// パースのチェック
+		try {
+			taskId = Long.parseLong(params.get("taskId"));
+		}catch (Exception e) {
+			forbidden();
+		}
+		Task task = TaskService.findTaskById(taskId);
+		// 権限のチェック
+		if(!TaskService.hasAuthority(user, task)) {
+			forbidden();
+		}
 		TaskService.deleteTask(task);
+
 		index();
 	}
 
@@ -129,12 +195,25 @@ public class Top extends Controller {
 	public static void updateTask() {
 		String uid = session.get(Consts.LOGIN);
 		User user = UserService.findUserByUid(uid);
+		// ログインチェック
 		if(user == null) {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
-		Task task = TaskService.findTaskById(Long.parseLong(params.get("taskId")));
+		Long taskId = null;
+		// パースのチェック
+		try {
+			taskId = Long.parseLong(params.get("taskId"));
+		}catch (Exception e) {
+			forbidden();
+		}
+		Task task = TaskService.findTaskById(taskId);
+		// 権限のチェック
+		if(!TaskService.hasAuthority(user, task)) {
+			forbidden();
+		}
 		TaskDto taskDto = TaskService.initTaskDto(task);
+
 		render(user, taskDto);
 	}
 
@@ -149,6 +228,7 @@ public class Top extends Controller {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
+		// パースのチェック
 		try {
 			String picUid = null;
 			String name = params.get("name");
@@ -164,14 +244,13 @@ public class Top extends Controller {
 			if(!TaskService.hasAuthority(user, task)) {
 				forbidden();
 			}
-			
 			TaskService.updateTask(task, name, description, picUid, taskType, limitTime);
 		} catch (Exception e) {
 			forbidden();
 		}
 		index();
 	}
-	
+
 	/**
 	 * 画面遷移なしにタスクを完了する
 	 */
@@ -184,6 +263,7 @@ public class Top extends Controller {
 			Login.index();
 		}
 		Long taskId = null;
+		// パースのチェック
 		try {
 			taskId = Long.parseLong(params.get("taskId"));
 		}catch (Exception e) {
@@ -194,7 +274,7 @@ public class Top extends Controller {
 		if(!TaskService.hasAuthority(user, task)) {
 			forbidden();
 		}
-		
+
 		TaskService.completeTask(task);
 	}
 	/**
@@ -209,7 +289,7 @@ public class Top extends Controller {
 			Login.index();
 		}
 		Long taskId = null;
-		// taskIdのパース
+		// パースのチェック
 		try{
 			taskId = Long.parseLong(params.get("taskId"));
 		}catch (Exception e) {
@@ -235,7 +315,7 @@ public class Top extends Controller {
 			Login.index();
 		}
 		Long taskId = null;
-		// タスクIDのパース
+		// パースのチェック
 		try {
 		 	taskId = Long.parseLong(params.get("taskId"));
 		} catch (Exception e) {
@@ -247,7 +327,7 @@ public class Top extends Controller {
 			forbidden();
 		}
 		String newName = params.get("newName");
-		
+
 		TaskService.renameTask(task, newName);
 	}
 	/**
@@ -262,7 +342,7 @@ public class Top extends Controller {
 			Login.index();
 		}
 		Long taskId = null;
-		// タスクIDのパース
+		// パースのチェック
 		try {
 			taskId = Long.parseLong(params.get("taskId"));
 		}catch (Exception e) {
@@ -273,8 +353,8 @@ public class Top extends Controller {
 		if(!TaskService.hasAuthority(user, task)) {
 			forbidden();
 		}
-		
+
 		TaskService.deleteTask(task);
 	}
-	
+
 }
