@@ -9,12 +9,10 @@ import models.todo.consts.TaskType;
 import models.todo.dto.TaskDto;
 import models.todo.entity.Information;
 import models.todo.entity.Task;
-import models.todo.entity.Team;
 import models.todo.entity.User;
 import play.mvc.Controller;
 import services.todo.InformationService;
 import services.todo.TaskService;
-import services.todo.TeamService;
 import services.todo.UserService;
 
 public class Top extends Controller {
@@ -30,7 +28,7 @@ public class Top extends Controller {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
-		List<Information> listInformation = InformationService.findListInformationByUidOrTidLimitN(uid, user.tid, 10);
+		List<Information> listInformation = InformationService.findListInformationByUidOrTidLimitN(uid, user.tid, 20);
 		render(user, listInformation);
 	}
 
@@ -62,7 +60,8 @@ public class Top extends Controller {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
-		render(user);
+		List<Information> listInformation = InformationService.findListInformationByUidOrTidLimitN(uid, user.tid, 20);
+		render(user, listInformation);
 	}
 
 	/**
@@ -92,13 +91,9 @@ public class Top extends Controller {
 			}
 			Timestamp limitTime = new Timestamp(new SimpleDateFormat("yyyy-MM-dd HH:mm")
 					.parse(params.get("limitTime").replaceAll("T", " ")).getTime());
-			TaskService.registerTask(name, description, tid, clientUid, taskType, limitTime);
-			Team team = TeamService.findByTid(tid);
-			String teamName = null;
-			if(team != null) {
-				teamName = team.name;
-			}
-			InformationService.registerInformation(clientUid, user.name, tid, teamName, "タスク登録", user.name + "さんが「" + name + "」を登録しました。");
+			Task task = TaskService.registerTask(name, description, tid, clientUid, taskType, limitTime);
+			InformationService.registerTaskInformation(user, task, "タスク登録", user.name + "さんが「" + name + "」を登録しました。");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			forbidden();
@@ -122,7 +117,8 @@ public class Top extends Controller {
 			forbidden();
 		}
 		TaskDto taskDto = TaskService.initTaskDto(task);
-		render(user, taskDto);
+		List<Information> listInformation = InformationService.findListInformationByUidOrTidLimitN(uid, user.tid, 20);
+		render(user, taskDto, listInformation);
 	}
 
 	/**
@@ -149,6 +145,8 @@ public class Top extends Controller {
 			forbidden();
 		}
 		TaskService.completeTask(task);
+		InformationService.registerTaskInformation(user, task, "タスク完了", user.name + "さんが「" + task.name + "」を完了しました。");
+
 		index();
 	}
 
@@ -176,6 +174,7 @@ public class Top extends Controller {
 			forbidden();
 		}
 		TaskService.incompleteTask(task);
+		InformationService.registerTaskInformation(user, task, "タスク完了取り消し", user.name + "さんが「" + task.name + "」の完了を取り消しました。");
 
 		index();
 	}
@@ -204,6 +203,7 @@ public class Top extends Controller {
 			forbidden();
 		}
 		TaskService.deleteTask(task);
+		InformationService.registerTaskInformation(user, task, "タスク削除", user.name + "さんが「" + task.name + "」を削除しました。");
 
 		index();
 	}
@@ -233,7 +233,8 @@ public class Top extends Controller {
 		}
 		TaskDto taskDto = TaskService.initTaskDto(task);
 
-		render(user, taskDto);
+		List<Information> listInformation = InformationService.findListInformationByUidOrTidLimitN(uid, user.tid, 20);
+		render(user, taskDto, listInformation);
 	}
 
 	/**
@@ -263,6 +264,8 @@ public class Top extends Controller {
 				forbidden();
 			}
 			TaskService.updateTask(task, name, description, taskType, user.tid, limitTime);
+			InformationService.registerTaskInformation(user, task, "タスク編集", user.name + "さんが「" + task.name + "」を編集しました。");
+
 		} catch (Exception e) {
 			forbidden();
 		}
@@ -294,6 +297,8 @@ public class Top extends Controller {
 		}
 
 		TaskService.completeTask(task);
+		InformationService.registerTaskInformation(user, task, "タスク完了", user.name + "さんが「" + task.name + "」を完了しました。");
+
 	}
 	/**
 	 * 画面遷移なしにタスクの完了を取り消す
@@ -320,6 +325,8 @@ public class Top extends Controller {
 		}
 
 		TaskService.incompleteTask(task);
+		InformationService.registerTaskInformation(user, task, "タスク完了取り消し", user.name + "さんが「" + task.name + "」の完了を取り消しました。");
+
 	}
 	/**
 	 * 画面遷移なしにタスク名を編集する
@@ -345,8 +352,8 @@ public class Top extends Controller {
 			forbidden();
 		}
 		String newName = params.get("newName");
-
 		TaskService.renameTask(task, newName);
+		InformationService.registerTaskInformation(user, task, "タスク編集", user.name + "さんが「" + task.name + "」を編集しました。");
 	}
 	/**
 	 * 画面遷移なしにタスクを削除する
@@ -373,6 +380,7 @@ public class Top extends Controller {
 		}
 
 		TaskService.deleteTask(task);
+		InformationService.registerTaskInformation(user, task, "タスク削除", user.name + "さんが「" + task.name + "」を削除しました。");
 	}
 
 }

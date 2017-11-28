@@ -1,11 +1,15 @@
 package controllers.todo;
 
+import java.util.List;
+
 import models.todo.consts.Consts;
 import models.todo.dto.UserDto;
+import models.todo.entity.Information;
 import models.todo.entity.Team;
 import models.todo.entity.User;
 import play.mvc.Controller;
 import sample.DigestGenerator;
+import services.todo.InformationService;
 import services.todo.TaskService;
 import services.todo.TeamService;
 import services.todo.UserService;
@@ -22,7 +26,8 @@ public class MyPage extends Controller {
 			Login.index();
 		}
 		UserDto userDto = UserService.initUserDto(user);
-		render(user, userDto);
+		List<Information> listInformation = InformationService.findListInformationByUidOrTidLimitN(uid, user.tid, 20);
+		render(user, userDto, listInformation);
 	}
 
 	/**
@@ -35,8 +40,8 @@ public class MyPage extends Controller {
 			flash.put(Consts.ERRMSG, "アクセスにはログインが必要です。");
 			Login.index();
 		}
-
-		render(user);
+		List<Information> listInformation = InformationService.findListInformationByUidOrTidLimitN(uid, user.tid, 20);
+		render(user, listInformation);
 	}
 	/**
 	 * チームを作成する

@@ -85,7 +85,17 @@
 			<a href="index">戻る</a>
 		</div>
 		<div class="sidebar">
-			サイドバー
+			<p class="sidebar-title">お知らせ</p>
+			<ul class="list-information">
+				#{list items:listInformation, as :'e'}
+					<li>
+						<div class="information-node">
+							<span class="info-register-time">${e.formatedRegisterTime}</span><br>
+							<span class="info-description">${e.description}</span>
+						</div>
+					</li>
+				#{/list}
+			</ul>
 		</div>
 	</div>
 </main>

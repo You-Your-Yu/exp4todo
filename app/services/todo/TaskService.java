@@ -179,7 +179,7 @@ public class TaskService {
 		if(minute >= 1) {
 			return minute + "分";
 		}
-		return "時間切れ";
+		return "期限切れ";
 	}
 
 	/**
