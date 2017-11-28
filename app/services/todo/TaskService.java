@@ -144,7 +144,7 @@ public class TaskService {
 		taskDto.description = task.description;
 		taskDto.limitTime = new SimpleDateFormat("yyyy年MM月dd日(E) HH時mm分", Locale.JAPAN).format(task.limitTime);
 		taskDto.formatedLimitTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(task.limitTime).replace(" ", "T");
-		taskDto.remainingTime =
+		taskDto.remainingTime = getFormatedRemainingTime(task);
 		taskDto.taskState = task.taskState.getString();
 		taskDto.taskType = task.taskType.getString();
 		Team team = TeamService.findByTid(task.tid);
@@ -155,6 +155,31 @@ public class TaskService {
 		taskDto.updateTime = new SimpleDateFormat("yyyy年MM月dd日(E) HH時mm分", Locale.JAPAN).format(task.updateTime);
 
 		return taskDto;
+	}
+	/**
+	 * 残り時間として表示する文字列を返す
+	 * @param task
+	 * @return
+	 */
+	private static String getFormatedRemainingTime(Task task) {
+		long now = System.currentTimeMillis();
+		long limit = task.limitTime.getTime();
+		int dt = (int)(limit - now);
+		int second = dt / 1000;
+		int minute = second / 60;
+		int hour = minute / 60;
+		int day = hour / 24;
+
+		if(day >= 1) {
+			return day + "日";
+		}
+		if(hour >= 1) {
+			return hour + "時間";
+		}
+		if(minute >= 1) {
+			return minute + "分";
+		}
+		return "時間切れ";
 	}
 
 	/**

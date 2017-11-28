@@ -36,14 +36,14 @@ function renderTaskTable(data) {
 		.append($taskNameAnchor);
 		var $taskName = $('<td></td>').append($form);
 		var $taskState = $('<td></td>').text(task.taskState);
-		var $limitTime = $('<td></td>').text(task.limitTime);
+		var $remainingTime = $('<td></td>').text(task.remainingTime);
 		var $btns = createBtns(task);
 
 		$('<tr></tr>')
 		.addClass('pagination-data')
 		.append($taskName)
 		.append($taskState)
-		.append($limitTime)
+		.append($remainingTime)
 		.append($btns)
 		.appendTo($table);
 	});
