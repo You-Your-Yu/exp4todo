@@ -44,11 +44,13 @@
 							<dd><input type="text" name="name" autofocus required/></dd>
 							<dt>詳細</dt>
 							<dd><textarea name="description"></textarea></dd>
-							<dt>チームに公開(必須)</dt>
-							<dd>
-								<input type="radio" name="taskType" value="PRIVATE" checked/>しない
-								<input type="radio" name="taskType" value="PUBLIC"/>する
-							</dd>
+							#{if user.tid != null}
+								<dt>タスクの所属(必須)</dt>
+								<dd>
+									<input type="radio" name="taskType" value="PRIVATE" checked/>個人
+									<input type="radio" name="taskType" value="PUBLIC"/>チーム
+								</dd>
+							#{/if}
 							<dt>締め切り日時(必須)</dt>
 							<dd><input type="datetime-local" class="datetime-local" name="limitTime"></dd>
 						</dl>

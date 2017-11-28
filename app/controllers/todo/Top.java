@@ -79,7 +79,14 @@ public class Top extends Controller {
 			String tid = user.tid;
 			String name = params.get("name");
 			String description = params.get("description");
-			TaskType taskType = TaskType.valueOf(params.get("taskType"));
+			String strTaskType = params.get("taskType");
+			TaskType taskType;
+			if(strTaskType == null || strTaskType.isEmpty()) {
+				taskType = TaskType.PRIVATE;
+			}
+			else {
+				taskType = TaskType.valueOf(strTaskType);
+			}
 			Timestamp limitTime = new Timestamp(new SimpleDateFormat("yyyy-MM-dd HH:mm")
 					.parse(params.get("limitTime").replaceAll("T", " ")).getTime());
 			TaskService.registerTask(name, description, tid, clientUid, picUid, taskType, limitTime);

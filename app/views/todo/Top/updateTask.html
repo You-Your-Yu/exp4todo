@@ -43,17 +43,19 @@
 							<dd><input type="text" name="name" value="${taskDto.taskName}" autofocus required></dd>
 							<dt>詳細</dt>
 							<dd><textarea name="description">${taskDto.description}</textarea></dd>
-							<dt>チームに公開</dt>
-							<dd>
-								#{if taskDto.taskType == "公開しない"}
-									<input type="radio" name="taskType" value="PRIVATE" checked/>しない
-									<input type="radio" name="taskType" value="PUBLIC"/>する
-								#{/if}
-								#{else}
-									<input type="radio" name="taskType" value="PRIVATE"/>しない
-									<input type="radio" name="taskType" value="PUBLIC" checked/>する
-								#{/else}
-							</dd>
+							#{if user.tid != null}
+								<dt>タスクの所属</dt>
+								<dd>
+									#{if taskDto.taskType == "個人"}
+										<input type="radio" name="taskType" value="PRIVATE" checked/>個人
+										<input type="radio" name="taskType" value="PUBLIC"/>チーム
+									#{/if}
+									#{else}
+										<input type="radio" name="taskType" value="PRIVATE"/>個人
+										<input type="radio" name="taskType" value="PUBLIC" checked/>チーム
+									#{/else}
+								</dd>
+							#{/if}
 							<dt>締め切り日時</dt>
 							<dd><input type="datetime-local" name="limitTime" value="${taskDto.formatedLimitTime}" required></dd>
 						</dl>

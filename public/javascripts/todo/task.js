@@ -3,8 +3,8 @@ var taskData;
 // 定数
 const COMPLETED = '完了済み';
 const INCOMPLETED = '未完了';
-const PRIVATE = '公開しない';
-const PUBLIC = '公開する';
+const PRIVATE = '個人';
+const PUBLIC = 'チーム';
 // ページネーションのオプション
 var opt;
 /*

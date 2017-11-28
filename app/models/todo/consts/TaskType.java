@@ -1,8 +1,8 @@
 package models.todo.consts;
 
 public enum TaskType {
-	PRIVATE("公開しない"),
-	PUBLIC("公開する"),
+	PRIVATE("個人"),
+	PUBLIC("チーム"),
 	;
 	private final String text;
 
