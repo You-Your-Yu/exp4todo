@@ -175,11 +175,11 @@ public class TaskService {
 	}
 
 	public static boolean hasAuthority(User user, Task task) {
-		if(user.tid == null) {
+		if(task.taskType == TaskType.PRIVATE) {
 			return user.uid.equals(task.clientUid);
 		}
 		else {
-			return user.uid.equals(task.clientUid) || user.tid.equals(task.tid);
+			return user.tid != null && user.tid.equals(task.tid);
 		}
 	}
 }
