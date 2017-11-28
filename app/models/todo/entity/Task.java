@@ -60,10 +60,12 @@ public class Task extends Model {
 	public Task(String name, String description, String tid, String clientUid, String picUid, TaskType taskType, Timestamp limitTime) {
 		this.name = name;
 		this.description = description;
-		this.tid = tid;
 		this.clientUid = clientUid;
 		this.picUid = picUid;
 		this.taskType = taskType;
+		if(taskType != null) {
+			this.tid = tid;
+		}
 		this.taskState = TaskState.INCOMPLETED;
 		this.limitTime = limitTime;
 		this.registerTime = new Timestamp(System.currentTimeMillis());
