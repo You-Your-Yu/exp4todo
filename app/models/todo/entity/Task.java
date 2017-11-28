@@ -63,8 +63,11 @@ public class Task extends Model {
 		this.clientUid = clientUid;
 		this.picUid = picUid;
 		this.taskType = taskType;
-		if(taskType != null) {
+		if(taskType == TaskType.PUBLIC) {
 			this.tid = tid;
+		}
+		else {
+			this.tid = null;
 		}
 		this.taskState = TaskState.INCOMPLETED;
 		this.limitTime = limitTime;

@@ -32,13 +32,18 @@ public class TaskService {
 	public static List<Task> findListTaskByUid(String uid) {
 		return Task.find("clientUid = ?1", uid).fetch();
 	}
-
-	public static List<Task> findListCompletedTaskByUid(String uid) {
-		return Task.find("clientUid = ?1 AND taskState = ?2", uid, TaskState.COMPLETED).fetch();
+	/**
+	 * tidでTaskを検索する
+	 * @return
+	 */
+	public static List<Task> findListTaskByTid() {
+		return Task.find("tid = ?1").fetch();
 	}
-
-	public static List<Task> findListIncompletedTaskByUid(String uid) {
-		return Task.find("clientUid = ?1 AND taskState = ?2", uid, TaskState.INCOMPLETED).fetch();
+	/**
+	 * uidでtidでTaskを
+	 */
+	public static List<Task> findListTaskByUidAndTid(String uid, String tid) {
+		return Task.find("(clientUid = ?1 AND taskType = ?2) OR (tid = ?3 AND taskType = ?4)", uid, TaskType.PRIVATE, tid, TaskType.PUBLIC).fetch();
 	}
 
 	/**
@@ -96,12 +101,17 @@ public class TaskService {
 	 * @return
 	 */
 	public static Task updateTask(Task task, String name, String description, String picUid,
-			TaskType taskType, Timestamp limitTime) {
-		System.out.println(" >>>>> TaskService.updateTask");
+			TaskType taskType, String tid, Timestamp limitTime) {
 		task.name = name;
 		task.description = description;
 		task.picUid = picUid;
 		task.taskType = taskType;
+		if(taskType == TaskType.PUBLIC) {
+			task.tid = tid;
+		}
+		else {
+			task.tid = null;
+		}
 		task.limitTime = limitTime;
 		task.updateTime = new Timestamp(System.currentTimeMillis());
 		task.save();
@@ -173,11 +183,13 @@ public class TaskService {
 	public static int deleteTaskByClientUid(String uid) {
 		return Task.delete("clientUid = ?1", uid);
 	}
-	
+
 	public static boolean hasAuthority(User user, Task task) {
-		if(!task.tid.equals(user.tid)  && !task.clientUid.equals(user.uid)) {
-			return false;
+		if(user.tid == null) {
+			return user.uid.equals(task.clientUid);
 		}
-		return true;
+		else {
+			return user.uid.equals(task.clientUid) || user.tid.equals(task.tid);
+		}
 	}
 }

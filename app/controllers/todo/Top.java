@@ -40,7 +40,9 @@ public class Top extends Controller {
 		if(user == null) {
 			forbidden();
 		}
-		List<Task> listTask = TaskService.findListTaskByUid(uid);
+		String tid = user.tid;
+		List<Task> listTask;
+		listTask = TaskService.findListTaskByUidAndTid(uid, tid);
 		List<TaskDto> listTaskDto = TaskService.initListTaskDto(listTask);
 		renderJSON(listTaskDto);
 	}
@@ -244,7 +246,7 @@ public class Top extends Controller {
 			if(!TaskService.hasAuthority(user, task)) {
 				forbidden();
 			}
-			TaskService.updateTask(task, name, description, picUid, taskType, limitTime);
+			TaskService.updateTask(task, name, description, picUid, taskType, user.tid, limitTime);
 		} catch (Exception e) {
 			forbidden();
 		}
