@@ -82,7 +82,10 @@ function createBtns(task) {
  * 画面遷移なしにタスクを完了する
  */
 function completeTaskWithoutST(taskId) {
-	console.log('completeTaskWithoutST');
+	var conf = confirm('タスクを完了しますか？');
+	if(!conf) {
+		return false;
+	}
 	$.post('completeTaskWithoutST', {'taskId': taskId});
 	$(taskData).each(function() {
 		var task = this;
@@ -98,7 +101,10 @@ function completeTaskWithoutST(taskId) {
 }
 /* 画面遷移なしにタスクの完了を取り消す */
 function incompleteTaskWithoutST(taskId) {
-	console.log('incompleteTaskWithoutST');
+	var conf = confirm('タスクの完了を取り消しますか？');
+	if(!conf) {
+		return false;
+	}
 	$.post('incompleteTaskWithoutST', {'taskId': taskId});
 	$(taskData).each(function() {
 		var task = this;
