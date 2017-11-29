@@ -174,7 +174,8 @@ public class TaskService {
 			return day + "日";
 		}
 		if(hour >= 1) {
-			return hour + "時間";
+			minute %= 60;
+			return hour + "時間" + minute + "分";
 		}
 		if(minute >= 1) {
 			return minute + "分";
