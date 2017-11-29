@@ -52,7 +52,7 @@ public class Information extends Model {
 		this.description = description;
 		this.registerTime = new Timestamp(System.currentTimeMillis());
 		try{
-			this.formatedRegisterTime = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.JAPAN)
+			this.formatedRegisterTime = new SimpleDateFormat("yyyy/MM/dd (E) HH:mm", Locale.JAPAN)
 										.format(this.registerTime);
 		}
 		catch (Exception e) {
