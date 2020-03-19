@@ -1,5 +1,5 @@
 # exp4todo
-tutorial for web application
+task management tool (Java+Play)
 
 ## Requirements
 - Java 6<=12
